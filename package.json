@@ -1,0 +1,37 @@
+{
+  "name": "@wildebeest/boxlayout",
+  "version": "0.1.0",
+  "description": "Box Layout module for creating fullscreen admin enviroments",
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --declaration"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pipan/js-boxlayout.git"
+  },
+  "dependencies": {
+    "@wildebeest/js-modules": "^0.1.0",
+    "@wildebeest/common": "^0.1.0",
+    "@wildebeest/scroll": "^0.1.0",
+    "@wildebeest/drag": "^0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.4.3"
+  },
+  "keywords": [
+    "js",
+    "modules",
+    "layout",
+    "box layout",
+    "administraion",
+    "absolute positioning"
+  ],
+  "author": "Peter Gasparik",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pipan/js-boxlayout/issues"
+  },
+  "homepage": "https://github.com/pipan/js-boxlayout#readme"
+}

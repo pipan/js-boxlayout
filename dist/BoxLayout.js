@@ -79,12 +79,12 @@ var BoxLayout = (function () {
         };
     };
     BoxLayout.prototype.addVerticalDeviderDrag = function (deviderName) {
-        var bulder = this.deviderBuilderFactory('vertical');
+        var builder = this.deviderBuilderFactory('vertical');
         var devider = this.layout.getDevider(deviderName);
-        var deviderElement = bulder.build({
+        var deviderElement = builder.build({
             'devider': devider
         });
-        deviderElement.getEmitter().on('drag', function (event) {
+        deviderElement.getEmitter().on('wbDrag', function (event) {
             devider.changePositionBy(event.horizontal);
         });
         this.domService.insert(deviderElement.getElement(), this.layout.getElement());
@@ -92,12 +92,12 @@ var BoxLayout = (function () {
         return deviderElement;
     };
     BoxLayout.prototype.addHorizontalDeviderDrag = function (deviderName) {
-        var bulder = this.deviderBuilderFactory('horizontal');
+        var builder = this.deviderBuilderFactory('horizontal');
         var devider = this.layout.getDevider(deviderName);
-        var deviderElement = bulder.build({
+        var deviderElement = builder.build({
             'devider': devider
         });
-        deviderElement.getEmitter().on('drag', function (event) {
+        deviderElement.getEmitter().on('wbDrag', function (event) {
             devider.changePositionBy(event.vertical);
         });
         this.domService.insert(deviderElement.getElement(), this.layout.getElement());

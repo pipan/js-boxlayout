@@ -10,11 +10,12 @@ var TopBindage_1 = require("./TopBindage");
 var BottomBIndage_1 = require("./BottomBIndage");
 var DeviderElementBuilder_1 = require("./DeviderElementBuilder");
 var BindageService_1 = require("./BindageService");
+var component_1 = require("@wildebeest/component");
 var BoxLayoutModule = (function () {
     function BoxLayoutModule() {
     }
     BoxLayoutModule.prototype.getDependencies = function () {
-        return [common_1.CommonModule, scroll_1.ScrollModule, drag_1.DragModule];
+        return [common_1.CommonModule, component_1.ComponentModule, scroll_1.ScrollModule, drag_1.DragModule];
     };
     BoxLayoutModule.prototype.register = function (container) {
         container.bind(BoxLayout_1.BoxLayout).toSelf();
@@ -34,12 +35,12 @@ var BoxLayoutModule = (function () {
                 'horizontal': '<div class="box-layout__devider box-layout__devider--horizontal"></div>'
             };
             return function (name) {
-                var builder = context.container.getNamed('Builder', 'devider');
+                var builder = context.container.getNamed('ComponentBuilder', 'devider');
                 builder.setTemplate(templates[name]);
                 return builder;
             };
         });
-        container.bind('Builder').to(DeviderElementBuilder_1.DeviderElementBuilder).inSingletonScope().whenTargetNamed('devider');
+        container.bind('ComponentBuilder').to(DeviderElementBuilder_1.DeviderElementBuilder).inSingletonScope().whenTargetNamed('devider');
     };
     BoxLayoutModule.prototype.boot = function (container) { };
     return BoxLayoutModule;

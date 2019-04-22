@@ -1,6 +1,6 @@
 import { Module } from "@wildebeest/js-modules";
 import { CommonModule } from "@wildebeest/common";
-import { ScrollModule, Builder } from "@wildebeest/scroll";
+import { ScrollModule } from "@wildebeest/scroll";
 import { DragModule } from "@wildebeest/drag";
 import { Container, interfaces } from "inversify";
 import { BoxLayout } from "./BoxLayout";
@@ -11,12 +11,13 @@ import { TopBindage } from "./TopBindage";
 import { BottomBindage } from "./BottomBIndage";
 import { DeviderElementBuilder } from "./DeviderElementBuilder";
 import { BindageService } from "./BindageService";
+import { ComponentModule, ComponentBuilder } from "@wildebeest/component";
 
 export class BoxLayoutModule implements Module
 {
     getDependencies(): Array<any>
     {
-        return [CommonModule, ScrollModule, DragModule];
+        return [CommonModule, ComponentModule, ScrollModule, DragModule];
     }
 
     register(container: Container): void
@@ -40,12 +41,12 @@ export class BoxLayoutModule implements Module
                 'horizontal': '<div class="box-layout__devider box-layout__devider--horizontal"></div>'
             };
             return (name: string) => {
-                let builder: any = context.container.getNamed('Builder', 'devider');
+                let builder: any = context.container.getNamed('ComponentBuilder', 'devider');
                 builder.setTemplate(templates[name]);
                 return builder;
             };
         });
-        container.bind<Builder>('Builder').to(DeviderElementBuilder).inSingletonScope().whenTargetNamed('devider');
+        container.bind<ComponentBuilder>('ComponentBuilder').to(DeviderElementBuilder).inSingletonScope().whenTargetNamed('devider');
     }
 
     boot(container: Container): void { }

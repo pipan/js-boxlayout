@@ -1,10 +1,10 @@
-import { Builder } from "@wildebeest/scroll";
 import { DeviderElement } from "./DeviderElement";
 import { DomService, EmitterService } from "@wildebeest/common";
 import { inject, injectable } from "inversify";
+import { ComponentBuilder } from "@wildebeest/component";
 
 @injectable()
-export class DeviderElementBuilder implements Builder
+export class DeviderElementBuilder implements ComponentBuilder
 {
     protected template: string;
     protected domService: DomService;

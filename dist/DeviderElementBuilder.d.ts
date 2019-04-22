@@ -1,6 +1,6 @@
-import { Builder } from "@wildebeest/scroll";
 import { DomService, EmitterService } from "@wildebeest/common";
-export declare class DeviderElementBuilder implements Builder {
+import { ComponentBuilder } from "@wildebeest/component";
+export declare class DeviderElementBuilder implements ComponentBuilder {
     protected template: string;
     protected domService: DomService;
     protected emitterService: EmitterService;

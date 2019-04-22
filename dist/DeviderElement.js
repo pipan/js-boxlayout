@@ -6,7 +6,7 @@ var DeviderElement = (function () {
         this.element = element;
         this.devider = devider;
         this.emitter = emitter;
-        new drag_1.DragableElement(this.element, this.emitter);
+        new drag_1.DragableComponent(this.element, this.emitter);
     }
     DeviderElement.prototype.getEmitter = function () {
         return this.emitter;

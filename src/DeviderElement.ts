@@ -1,5 +1,5 @@
 import { Devider } from "./Devider";
-import { DragableElement } from "@wildebeest/drag";
+import { DragableComponent } from "@wildebeest/drag";
 import { Emitter } from "@wildebeest/common";
 
 export class DeviderElement
@@ -14,7 +14,7 @@ export class DeviderElement
         this.devider = devider;
         this.emitter = emitter;
 
-        new DragableElement(this.element, this.emitter);
+        new DragableComponent(this.element, this.emitter);
     }
 
     public getEmitter(): Emitter

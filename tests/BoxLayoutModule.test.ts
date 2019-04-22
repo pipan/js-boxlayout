@@ -30,5 +30,5 @@ test("register services", () => {
     factory = app.getContainer().get('Factory<DeviderElementBuilder>');
     expect(factory('vertical')).toBeInstanceOf(DeviderElementBuilder);
     expect(factory('horizontal')).toBeInstanceOf(DeviderElementBuilder);
-    expect(app.getContainer().getNamed('Builder', 'devider')).toBeInstanceOf(DeviderElementBuilder);
+    expect(app.getContainer().getNamed('ComponentBuilder', 'devider')).toBeInstanceOf(DeviderElementBuilder);
 })

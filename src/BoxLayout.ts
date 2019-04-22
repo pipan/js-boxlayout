@@ -1,12 +1,11 @@
 import { injectable, inject } from "inversify";
 import { EmitterService, Emitter, ViewportService, DomService } from "@wildebeest/common";
-import { Builder } from "@wildebeest/scroll";
 import { EmptyLayout } from "./EmptyLayout";
 import { LayoutDevider } from "./LayoutDevider";
 import { InverseLayoutDevider } from "./InverseLayoutDevider";
 import { DeviderElementBuilder } from "./DeviderElementBuilder";
 import { BindageService } from "./BindageService";
-import { DeviderElement } from "./DeviderElement";
+import { ComponentBuilder } from "@wildebeest/component";
 
 @injectable()
 export class BoxLayout
@@ -89,12 +88,12 @@ export class BoxLayout
 
     protected addVerticalDeviderDrag(deviderName: string): any
     {
-        let bulder: Builder = this.deviderBuilderFactory('vertical');
+        let builder: ComponentBuilder = this.deviderBuilderFactory('vertical');
         let devider: LayoutDevider = this.layout.getDevider(deviderName);
-        let deviderElement: any = bulder.build({
+        let deviderElement: any = builder.build({
             'devider': devider
         });
-        deviderElement.getEmitter().on('drag', (event: any) => {
+        deviderElement.getEmitter().on('wbDrag', (event: any) => {
             devider.changePositionBy(event.horizontal);
         });
         this.domService.insert(deviderElement.getElement(), this.layout.getElement());
@@ -104,12 +103,12 @@ export class BoxLayout
 
     protected addHorizontalDeviderDrag(deviderName: string): any
     {
-        let bulder: Builder = this.deviderBuilderFactory('horizontal');
+        let builder: ComponentBuilder = this.deviderBuilderFactory('horizontal');
         let devider: LayoutDevider = this.layout.getDevider(deviderName);
-        let deviderElement: any = bulder.build({
+        let deviderElement: any = builder.build({
             'devider': devider
         });
-        deviderElement.getEmitter().on('drag', (event: any) => {
+        deviderElement.getEmitter().on('wbDrag', (event: any) => {
             devider.changePositionBy(event.vertical);
         });
         this.domService.insert(deviderElement.getElement(), this.layout.getElement());

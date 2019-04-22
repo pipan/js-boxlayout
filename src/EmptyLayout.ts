@@ -52,7 +52,7 @@ export class EmptyLayout
     {
         this.getDevider(deviderName).getEmitter().on('change', (event: any) => {
             elementBindage.update(event);
-            this.emitter.emit('afterUpdate', {
+            this.emitter.emit('wbAfterUpdate', {
                 'devider': deviderName,
                 'value': event
             });

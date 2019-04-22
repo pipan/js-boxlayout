@@ -137,6 +137,6 @@ export class BoxLayout
         for (let key in deviders) {
             deviders[key].detectChange();
         }
-        this.emitter.emit('recalc', {});
+        this.emitter.emit('wbRecalc', {});
     }
 }

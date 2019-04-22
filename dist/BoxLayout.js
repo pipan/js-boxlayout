@@ -118,7 +118,7 @@ var BoxLayout = (function () {
         for (var key in deviders) {
             deviders[key].detectChange();
         }
-        this.emitter.emit('recalc', {});
+        this.emitter.emit('wbRecalc', {});
     };
     BoxLayout = __decorate([
         inversify_1.injectable(),

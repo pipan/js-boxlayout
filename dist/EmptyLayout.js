@@ -30,7 +30,7 @@ var EmptyLayout = (function () {
         var _this = this;
         this.getDevider(deviderName).getEmitter().on('change', function (event) {
             elementBindage.update(event);
-            _this.emitter.emit('afterUpdate', {
+            _this.emitter.emit('wbAfterUpdate', {
                 'devider': deviderName,
                 'value': event
             });

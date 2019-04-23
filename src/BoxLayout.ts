@@ -1,142 +1,121 @@
 import { injectable, inject } from "inversify";
 import { EmitterService, Emitter, ViewportService, DomService } from "@wildebeest/common";
-import { EmptyLayout } from "./EmptyLayout";
-import { LayoutDevider } from "./LayoutDevider";
-import { InverseLayoutDevider } from "./InverseLayoutDevider";
-import { DeviderElementBuilder } from "./DeviderElementBuilder";
-import { BindageService } from "./BindageService";
-import { ComponentBuilder } from "@wildebeest/component";
+import { HorizontalDeviderBuilder } from "./HorizontalDeviderBuilder";
+import { ScreenVerticalPositionValue } from "./position/SceenVerticalPositionValue";
+import { ScreenHorizontalPositionValue } from "./position/ScreenHorizontalPositionValue";
+import { RecktangleBlock } from "./block/RectangleBlock";
+import { VerticalBlock } from "./block/VerticalBlock";
+import { HorizontalBlock } from "./block/HorizontalBlock";
+import { BlockBlueprint } from "./block/BlockBlueprint";
+import { ComponentBuilder, Component } from "@wildebeest/component";
+import { VerticalDeviderBuilder } from "./VerticalDeviderBuilder";
 
 @injectable()
 export class BoxLayout
 {
-    protected layout: EmptyLayout;
+    protected positions: any = {};
+    protected blueprints: any = {};
     protected emitterService: EmitterService;
     protected emitter: Emitter;
     protected viewportService: ViewportService;
-    protected bindageService: BindageService;
-    protected deviderBuilderFactory: (name: string) => DeviderElementBuilder;
     protected domService: DomService;
     protected config: any = {};
-    protected blockBindings: any = {
-        'top': ['screen-top', 'screen-right', 'top', 'screen-left'],
-        'left': ['top', 'left', 'screen-bottom', 'screen-left'],
-        'center': ['top', 'right', 'bottom', 'left'],
-        'right': ['top', 'screen-right', 'bottom', 'right'],
-        'bottom': ['bottom', 'screen-right', 'screen-bottom', 'left']
-    };
-    protected deviderBindings: any = {
-        'top': ['screen-top', 'screen-right', 'top', 'screen-left'],
-        'left': ['top', 'left', 'screen-bottom'],
-        'right': ['top', 'right', 'bottom'],
-        'bottom': ['left', 'bottom', 'screen-right']
-    };
+    protected builers: any = {};
+    protected element: HTMLElement;
 
-    constructor(@inject(EmitterService) emitterService: EmitterService, @inject(ViewportService) viewportService: ViewportService, bindageService: BindageService, @inject('Factory<DeviderElementBuilder>') deviderBuilderFactory: (name: string) => DeviderElementBuilder, @inject(DomService) domService: DomService)
+    constructor(@inject(EmitterService) emitterService: EmitterService, @inject(ViewportService) viewportService: ViewportService, @inject(HorizontalDeviderBuilder) horizontalBuilder: HorizontalDeviderBuilder, @inject(VerticalDeviderBuilder) verticalBuilder: VerticalDeviderBuilder, @inject(DomService) domService: DomService)
     {
         this.emitterService = emitterService;
         this.emitter = this.emitterService.createEmitter();
-        this.layout = new EmptyLayout(this.emitter);
         this.viewportService = viewportService;
-        this.bindageService = bindageService;
-        this.deviderBuilderFactory = deviderBuilderFactory;
         this.domService = domService;
+        this.builers = {
+            vertical: verticalBuilder,
+            horizontal: horizontalBuilder
+        };
+
+        this.positions = {
+            screenTop: new ScreenVerticalPositionValue(0, viewportService),
+            screenRight: new ScreenHorizontalPositionValue(0, viewportService),
+            screenBottom: new ScreenVerticalPositionValue(0, viewportService),
+            screenLeft: new ScreenHorizontalPositionValue(0, viewportService),
+            top: new ScreenVerticalPositionValue(0, viewportService),
+            right: new ScreenHorizontalPositionValue(0, viewportService),
+            bottom: new ScreenVerticalPositionValue(0, viewportService),
+            left: new ScreenHorizontalPositionValue(0, viewportService)
+        };
+
+        this.blueprints = {
+            top: new RecktangleBlock(this.positions.screenTop, this.positions.screenRight, this.positions.top, this.positions.screenLeft),
+            left: new RecktangleBlock(this.positions.top, this.positions.left, this.positions.screenBottom, this.positions.screenLeft),
+            center: new RecktangleBlock(this.positions.top, this.positions.right, this.positions.bototm, this.positions.left),
+            right: new RecktangleBlock(this.positions.top, this.positions.screenRight, this.positions.bottom, this.positions.right),
+            bottom: new RecktangleBlock(this.positions.bottom, this.positions.screenRight, this.positions.screenBottom, this.positions.left),
+            deviderLeft: new VerticalBlock(this.positions.top, this.positions.screenBottom, this.positions.left),
+            deviderRight: new VerticalBlock(this.positions.top, this.positions.bottom, this.positions.right),
+            deviderBottom: new HorizontalBlock(this.positions.left, this.positions.screenRight, this.positions.bottom)
+        }
     }
 
-    public initialize(element: any, config: any): void
+    public initialize(element: HTMLElement, config: any): void
     {
+        this.element = element;
         this.config = config;
-        this.layout.initialize(element);
 
-        let windowWidth = this.viewportService.getWidth();
-        let windowHeight = this.viewportService.getHeight();
-        
-        this.layout.addDevider('screen-top', new LayoutDevider(this.emitterService.createEmitter(), 0));
-        this.layout.addDevider('screen-left', new LayoutDevider(this.emitterService.createEmitter(), 0));
-        this.layout.addDevider('screen-right', new InverseLayoutDevider(this.emitterService.createEmitter(), 0, windowWidth));
-        this.layout.addDevider('screen-bottom', new InverseLayoutDevider(this.emitterService.createEmitter(), 0, windowHeight));
+        this.positions.top.setValue(this.config.top || 0);
+        this.positions.right.setValue(this.config.right || 0);
+        this.positions.bototm.setValue(this.config.bottom || 0);
+        this.positions.left.setValue(this.config.left || 0);
 
-        this.layout.addDevider('top', new LayoutDevider(this.emitterService.createEmitter(), this.config.top || 0));
-        this.layout.addDevider('left', new LayoutDevider(this.emitterService.createEmitter(), this.config.left || 0));
-        this.layout.addDevider('right', new InverseLayoutDevider(this.emitterService.createEmitter(), this.config.right || 0, windowWidth));
-        this.layout.addDevider('bottom', new InverseLayoutDevider(this.emitterService.createEmitter(), this.config.bottom || 0, windowHeight));
-
-        if (config.deviders.drag) {
-            this.addVerticalDeviderDrag('left');
-            this.addVerticalDeviderDrag('right');    
-            this.addHorizontalDeviderDrag('bottom');
+        if (config.deviders.dragable) {
+            this.createDragableDevider(this.blueprints.deviderLeft, this.builers.vertical).getEmitter().on('wbDrag', (event: any) => {
+                this.positions.left.moveBy(event.horizontal);
+            });
+            this.createDragableDevider(this.blueprints.deviderRight, this.builers.vertical).getEmitter().on('wbDrag', (event: any) => {
+                this.positions.right.moveBy(event.horizontal);
+            });
+            this.createDragableDevider(this.blueprints.deviderBottom, this.builers.horizontal).getEmitter().on('wbDrag', (event: any) => {
+                this.positions.bottom.moveBy(event.vertical);
+            });
         }
-``
-        this.viewportService.getEmitter().on('change', (event: any) => {
-            this.layout.getDevider<InverseLayoutDevider>('right').setRelativeTo(event.width)
-            this.layout.getDevider<InverseLayoutDevider>('bottom').setRelativeTo(event.height)
-            this.layout.getDevider<InverseLayoutDevider>('screen-right').setRelativeTo(event.width);
-            this.layout.getDevider<InverseLayoutDevider>('screen-bottom').setRelativeTo(event.height);
-            this.recalc();
-        });
+
+        // this.getEmitter().on('wbResize', this.onResize.bind(this));
     }
 
     public getPositions(): any
     {
-        return {
-            top: this.getDevider('top').getPosition(),
-            right: this.getDevider('right').getPosition(),
-            bottom: this.getDevider('bottom').getPosition(),
-            left: this.getDevider('left').getPosition(),
-        };
+        return this.positions;
     }
 
-    protected addVerticalDeviderDrag(deviderName: string): any
+    protected createDragableDevider(blueprint: BlockBlueprint, builder: ComponentBuilder): Component
     {
-        let builder: ComponentBuilder = this.deviderBuilderFactory('vertical');
-        let devider: LayoutDevider = this.layout.getDevider(deviderName);
-        let deviderElement: any = builder.build({
-            'devider': devider
-        });
-        deviderElement.getEmitter().on('wbDrag', (event: any) => {
-            devider.changePositionBy(event.horizontal);
-        });
-        this.domService.insert(deviderElement.getElement(), this.layout.getElement());
-        this.bindageService.bindVertical(this.layout, deviderElement.getElement(), this.deviderBindings[deviderName]);
+        let deviderElement: Component = builder.build({});
+        this.domService.insert(deviderElement.getElement(), this.element);
+        blueprint.bind(deviderElement.getElement());
         return deviderElement;
-    }
-
-    protected addHorizontalDeviderDrag(deviderName: string): any
-    {
-        let builder: ComponentBuilder = this.deviderBuilderFactory('horizontal');
-        let devider: LayoutDevider = this.layout.getDevider(deviderName);
-        let deviderElement: any = builder.build({
-            'devider': devider
-        });
-        deviderElement.getEmitter().on('wbDrag', (event: any) => {
-            devider.changePositionBy(event.vertical);
-        });
-        this.domService.insert(deviderElement.getElement(), this.layout.getElement());
-        this.bindageService.bindHorizontal(this.layout, deviderElement.getElement(), this.deviderBindings[deviderName]);
-        return deviderElement;
-    }
-
-    public getDevider(name: string): LayoutDevider
-    {
-        return this.layout.getDevider(name);
     }
 
     public setBlock(element: any, blockName: string): void
     {
-        this.bindageService.bindBlock(this.layout, element, this.blockBindings[blockName]);
+        this.blueprints[blockName].bind(element);
     }
+
+    // public onResize(event: any): void
+    // {
+        
+    // }
 
     public getEmitter(): Emitter
     {
         return this.emitter;
     }
 
-    public recalc(): void
-    {
-        let deviders: Array<LayoutDevider> = this.layout.getDeviders();
-        for (let key in deviders) {
-            deviders[key].detectChange();
-        }
-        this.emitter.emit('wbRecalc', {});
-    }
+    // public recalc(): void
+    // {
+    //     let deviders: Array<LayoutDevider> = this.layout.getDeviders();
+    //     for (let key in deviders) {
+    //         deviders[key].detectChange();
+    //     }
+    //     this.emitter.emit('wbRecalc', {});
+    // }
 }

@@ -4,7 +4,7 @@ import { inject, injectable } from "inversify";
 import { ComponentBuilder } from "@wildebeest/component";
 
 @injectable()
-export class DeviderElementBuilder implements ComponentBuilder
+export class VerticalDeviderBuilder implements ComponentBuilder
 {
     protected template: string;
     protected domService: DomService;
@@ -12,7 +12,7 @@ export class DeviderElementBuilder implements ComponentBuilder
 
     constructor(@inject(DomService) domService: DomService, @inject(EmitterService) emitterService: EmitterService)
     {
-        this.template = '<div class="box-layout__devider"></div>'    
+        this.template = '<div class="box-layout__devider box-layout__devider--vertical"></div>';
         this.domService = domService;
         this.emitterService = emitterService;
     }
@@ -20,7 +20,7 @@ export class DeviderElementBuilder implements ComponentBuilder
     build(data: any): any
     {
         let element = this.domService.create(this.template);
-        return new DeviderElement(element, data.devider, this.emitterService.createEmitter());
+        return new DeviderElement(element, this.emitterService.createEmitter());
     }
 
     setTemplate(template: string): void

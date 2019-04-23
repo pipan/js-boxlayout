@@ -1,26 +1,22 @@
 import { EmitterService, Emitter, ViewportService, DomService } from "@wildebeest/common";
-import { EmptyLayout } from "./EmptyLayout";
-import { LayoutDevider } from "./LayoutDevider";
-import { DeviderElementBuilder } from "./DeviderElementBuilder";
-import { BindageService } from "./BindageService";
+import { HorizontalDeviderBuilder } from "./HorizontalDeviderBuilder";
+import { BlockBlueprint } from "./block/BlockBlueprint";
+import { ComponentBuilder, Component } from "@wildebeest/component";
+import { VerticalDeviderBuilder } from "./VerticalDeviderBuilder";
 export declare class BoxLayout {
-    protected layout: EmptyLayout;
+    protected positions: any;
+    protected blueprints: any;
     protected emitterService: EmitterService;
     protected emitter: Emitter;
     protected viewportService: ViewportService;
-    protected bindageService: BindageService;
-    protected deviderBuilderFactory: (name: string) => DeviderElementBuilder;
     protected domService: DomService;
     protected config: any;
-    protected blockBindings: any;
-    protected deviderBindings: any;
-    constructor(emitterService: EmitterService, viewportService: ViewportService, bindageService: BindageService, deviderBuilderFactory: (name: string) => DeviderElementBuilder, domService: DomService);
-    initialize(element: any, config: any): void;
+    protected builers: any;
+    protected element: HTMLElement;
+    constructor(emitterService: EmitterService, viewportService: ViewportService, horizontalBuilder: HorizontalDeviderBuilder, verticalBuilder: VerticalDeviderBuilder, domService: DomService);
+    initialize(element: HTMLElement, config: any): void;
     getPositions(): any;
-    protected addVerticalDeviderDrag(deviderName: string): any;
-    protected addHorizontalDeviderDrag(deviderName: string): any;
-    getDevider(name: string): LayoutDevider;
+    protected createDragableDevider(blueprint: BlockBlueprint, builder: ComponentBuilder): Component;
     setBlock(element: any, blockName: string): void;
     getEmitter(): Emitter;
-    recalc(): void;
 }

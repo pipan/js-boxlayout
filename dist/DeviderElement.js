@@ -2,9 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var drag_1 = require("@wildebeest/drag");
 var DeviderElement = (function () {
-    function DeviderElement(element, devider, emitter) {
+    function DeviderElement(element, emitter) {
         this.element = element;
-        this.devider = devider;
         this.emitter = emitter;
         new drag_1.DragableComponent(this.element, this.emitter);
     }

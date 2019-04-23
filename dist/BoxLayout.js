@@ -48,7 +48,7 @@ var BoxLayout = (function () {
         this.blueprints = {
             top: new RectangleBlock_1.RecktangleBlock(this.positions.screenTop, this.positions.screenRight, this.positions.top, this.positions.screenLeft),
             left: new RectangleBlock_1.RecktangleBlock(this.positions.top, this.positions.left, this.positions.screenBottom, this.positions.screenLeft),
-            center: new RectangleBlock_1.RecktangleBlock(this.positions.top, this.positions.right, this.positions.bototm, this.positions.left),
+            center: new RectangleBlock_1.RecktangleBlock(this.positions.top, this.positions.right, this.positions.bottom, this.positions.left),
             right: new RectangleBlock_1.RecktangleBlock(this.positions.top, this.positions.screenRight, this.positions.bottom, this.positions.right),
             bottom: new RectangleBlock_1.RecktangleBlock(this.positions.bottom, this.positions.screenRight, this.positions.screenBottom, this.positions.left),
             deviderLeft: new VerticalBlock_1.VerticalBlock(this.positions.top, this.positions.screenBottom, this.positions.left),
@@ -62,7 +62,7 @@ var BoxLayout = (function () {
         this.config = config;
         this.positions.top.setValue(this.config.top || 0);
         this.positions.right.setValue(this.config.right || 0);
-        this.positions.bototm.setValue(this.config.bottom || 0);
+        this.positions.bottom.setValue(this.config.bottom || 0);
         this.positions.left.setValue(this.config.left || 0);
         if (config.deviders.dragable) {
             this.createDragableDevider(this.blueprints.deviderLeft, this.builers.vertical).getEmitter().on('wbDrag', function (event) {

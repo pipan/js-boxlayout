@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var OneWayBinding_1 = require("../binding/OneWayBinding");
+var PixelsBinding_1 = require("../binding/PixelsBinding");
 var BlockBlueprint = (function () {
     function BlockBlueprint(config) {
         this.config = config;
     }
     BlockBlueprint.prototype.bind = function (element) {
         for (var i = 0; i < this.config.length; i++) {
-            var binding = new OneWayBinding_1.OneWayBinding(element, this.config[i].elementProperty);
+            var binding = new PixelsBinding_1.PixelsBinding(element, this.config[i].elementProperty);
             if (this.config[i].inverse) {
                 this.config[i].position.bindInverse(binding);
             }

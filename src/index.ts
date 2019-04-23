@@ -6,6 +6,7 @@ export { ScreenVerticalPositionValue } from './position/SceenVerticalPositionVal
 export { ScreenHorizontalPositionValue } from './position/ScreenHorizontalPositionValue';
 export { Binding } from './binding/Binding';
 export { OneWayBinding } from './binding/OneWayBinding';
+export { PixelsBinding } from './binding/PixelsBinding';
 export { Block } from './block/Block';
 export { BlockBlueprint } from './block/BlockBlueprint';
 export { HorizontalBlock } from './block/HorizontalBlock';

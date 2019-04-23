@@ -9,6 +9,7 @@ import { HorizontalBlock } from "./block/HorizontalBlock";
 import { BlockBlueprint } from "./block/BlockBlueprint";
 import { ComponentBuilder, Component } from "@wildebeest/component";
 import { VerticalDeviderBuilder } from "./VerticalDeviderBuilder";
+import { InverseValue } from "./position/InverseValue";
 
 @injectable()
 export class BoxLayout
@@ -46,14 +47,14 @@ export class BoxLayout
         };
 
         this.blueprints = {
-            top: new RecktangleBlock(this.positions.screenTop, this.positions.screenRight, this.positions.top, this.positions.screenLeft),
-            left: new RecktangleBlock(this.positions.top, this.positions.left, this.positions.screenBottom, this.positions.screenLeft),
+            top: new RecktangleBlock(this.positions.screenTop, this.positions.screenRight, new InverseValue(this.positions.top), this.positions.screenLeft),
+            left: new RecktangleBlock(this.positions.top, new InverseValue(this.positions.left), this.positions.screenBottom, this.positions.screenLeft),
             center: new RecktangleBlock(this.positions.top, this.positions.right, this.positions.bottom, this.positions.left),
-            right: new RecktangleBlock(this.positions.top, this.positions.screenRight, this.positions.bottom, this.positions.right),
-            bottom: new RecktangleBlock(this.positions.bottom, this.positions.screenRight, this.positions.screenBottom, this.positions.left),
+            right: new RecktangleBlock(this.positions.top, this.positions.screenRight, this.positions.bottom, new InverseValue(this.positions.right)),
+            bottom: new RecktangleBlock(new InverseValue(this.positions.bottom), this.positions.screenRight, this.positions.screenBottom, this.positions.left),
             deviderLeft: new VerticalBlock(this.positions.top, this.positions.screenBottom, this.positions.left),
-            deviderRight: new VerticalBlock(this.positions.top, this.positions.bottom, this.positions.right),
-            deviderBottom: new HorizontalBlock(this.positions.left, this.positions.screenRight, this.positions.bottom)
+            deviderRight: new VerticalBlock(this.positions.top, this.positions.bottom, new InverseValue(this.positions.right)),
+            deviderBottom: new HorizontalBlock(this.positions.left, this.positions.screenRight, new InverseValue(this.positions.bottom))
         }
     }
 

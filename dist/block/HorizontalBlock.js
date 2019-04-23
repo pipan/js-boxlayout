@@ -9,8 +9,7 @@ var HorizontalBlock = (function () {
                 position: left
             }, {
                 elementProperty: 'style.right',
-                position: right,
-                inverse: true
+                position: right
             }, {
                 elementProperty: 'style.top',
                 position: top

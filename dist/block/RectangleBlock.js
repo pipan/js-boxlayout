@@ -9,12 +9,10 @@ var RecktangleBlock = (function () {
                 position: top
             }, {
                 elementProperty: 'style.right',
-                position: right,
-                inverse: true
+                position: right
             }, {
                 elementProperty: 'style.bottom',
-                position: bottom,
-                inverse: true
+                position: bottom
             }, {
                 elementProperty: 'style.left',
                 position: left

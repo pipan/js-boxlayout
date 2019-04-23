@@ -8,12 +8,7 @@ var BlockBlueprint = (function () {
     BlockBlueprint.prototype.bind = function (element) {
         for (var i = 0; i < this.config.length; i++) {
             var binding = new PixelsBinding_1.PixelsBinding(element, this.config[i].elementProperty);
-            if (this.config[i].inverse) {
-                this.config[i].position.bindInverse(binding);
-            }
-            else {
-                this.config[i].position.bind(binding);
-            }
+            this.config[i].position.bind(binding);
         }
     };
     return BlockBlueprint;

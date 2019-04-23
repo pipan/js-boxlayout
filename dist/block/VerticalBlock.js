@@ -9,8 +9,7 @@ var VerticalBlock = (function () {
                 position: top
             }, {
                 elementProperty: 'style.bottom',
-                position: bottom,
-                inverse: true
+                position: bottom
             }, {
                 elementProperty: 'style.left',
                 position: left

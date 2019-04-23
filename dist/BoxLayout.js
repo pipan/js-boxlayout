@@ -21,6 +21,7 @@ var RectangleBlock_1 = require("./block/RectangleBlock");
 var VerticalBlock_1 = require("./block/VerticalBlock");
 var HorizontalBlock_1 = require("./block/HorizontalBlock");
 var VerticalDeviderBuilder_1 = require("./VerticalDeviderBuilder");
+var InverseValue_1 = require("./position/InverseValue");
 var BoxLayout = (function () {
     function BoxLayout(emitterService, viewportService, horizontalBuilder, verticalBuilder, domService) {
         this.positions = {};
@@ -46,14 +47,14 @@ var BoxLayout = (function () {
             left: new ScreenHorizontalPositionValue_1.ScreenHorizontalPositionValue(0, viewportService)
         };
         this.blueprints = {
-            top: new RectangleBlock_1.RecktangleBlock(this.positions.screenTop, this.positions.screenRight, this.positions.top, this.positions.screenLeft),
-            left: new RectangleBlock_1.RecktangleBlock(this.positions.top, this.positions.left, this.positions.screenBottom, this.positions.screenLeft),
+            top: new RectangleBlock_1.RecktangleBlock(this.positions.screenTop, this.positions.screenRight, new InverseValue_1.InverseValue(this.positions.top), this.positions.screenLeft),
+            left: new RectangleBlock_1.RecktangleBlock(this.positions.top, new InverseValue_1.InverseValue(this.positions.left), this.positions.screenBottom, this.positions.screenLeft),
             center: new RectangleBlock_1.RecktangleBlock(this.positions.top, this.positions.right, this.positions.bottom, this.positions.left),
-            right: new RectangleBlock_1.RecktangleBlock(this.positions.top, this.positions.screenRight, this.positions.bottom, this.positions.right),
-            bottom: new RectangleBlock_1.RecktangleBlock(this.positions.bottom, this.positions.screenRight, this.positions.screenBottom, this.positions.left),
+            right: new RectangleBlock_1.RecktangleBlock(this.positions.top, this.positions.screenRight, this.positions.bottom, new InverseValue_1.InverseValue(this.positions.right)),
+            bottom: new RectangleBlock_1.RecktangleBlock(new InverseValue_1.InverseValue(this.positions.bottom), this.positions.screenRight, this.positions.screenBottom, this.positions.left),
             deviderLeft: new VerticalBlock_1.VerticalBlock(this.positions.top, this.positions.screenBottom, this.positions.left),
-            deviderRight: new VerticalBlock_1.VerticalBlock(this.positions.top, this.positions.bottom, this.positions.right),
-            deviderBottom: new HorizontalBlock_1.HorizontalBlock(this.positions.left, this.positions.screenRight, this.positions.bottom)
+            deviderRight: new VerticalBlock_1.VerticalBlock(this.positions.top, this.positions.bottom, new InverseValue_1.InverseValue(this.positions.right)),
+            deviderBottom: new HorizontalBlock_1.HorizontalBlock(this.positions.left, this.positions.screenRight, new InverseValue_1.InverseValue(this.positions.bottom))
         };
     }
     BoxLayout.prototype.initialize = function (element, config) {

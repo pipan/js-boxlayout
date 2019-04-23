@@ -34,7 +34,7 @@ var PositionValue = (function () {
             this.bindings[i].update(this.value);
         }
         for (var i = 0; i < this.inverseBindings.length; i++) {
-            this.inverseBindings[i].update(this.value);
+            this.inverseBindings[i].update(this.max - this.value);
         }
     };
     PositionValue.prototype.getMax = function () {

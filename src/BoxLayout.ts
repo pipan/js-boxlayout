@@ -72,7 +72,7 @@ export class BoxLayout
                 this.positions.left.moveBy(event.horizontal);
             });
             this.createDragableDevider(this.blueprints.deviderRight, this.builers.vertical).getEmitter().on('wbDrag', (event: any) => {
-                this.positions.right.moveBy(event.horizontal);
+                this.positions.right.moveBy(-event.horizontal);
             });
             this.createDragableDevider(this.blueprints.deviderBottom, this.builers.horizontal).getEmitter().on('wbDrag', (event: any) => {
                 this.positions.bottom.moveBy(event.vertical);

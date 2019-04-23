@@ -52,7 +52,7 @@ export class PositionValue implements AbsolutePosition
             this.bindings[i].update(this.value);
         }
         for (let i = 0; i < this.inverseBindings.length; i++) {
-            this.inverseBindings[i].update(this.value);
+            this.inverseBindings[i].update(this.max - this.value);
         }
     }
 

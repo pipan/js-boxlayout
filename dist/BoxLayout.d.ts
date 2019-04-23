@@ -19,4 +19,5 @@ export declare class BoxLayout {
     protected createDragableDevider(blueprint: BlockBlueprint, builder: ComponentBuilder): Component;
     setBlock(element: any, blockName: string): void;
     getEmitter(): Emitter;
+    recalc(): void;
 }

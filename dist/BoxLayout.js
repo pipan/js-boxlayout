@@ -91,6 +91,12 @@ var BoxLayout = (function () {
     BoxLayout.prototype.getEmitter = function () {
         return this.emitter;
     };
+    BoxLayout.prototype.recalc = function () {
+        for (var key in this.positions) {
+            this.positions[key].update();
+        }
+        this.emitter.emit('wbRecalc', {});
+    };
     BoxLayout = __decorate([
         inversify_1.injectable(),
         __param(0, inversify_1.inject(common_1.EmitterService)), __param(1, inversify_1.inject(common_1.ViewportService)), __param(2, inversify_1.inject(HorizontalDeviderBuilder_1.HorizontalDeviderBuilder)), __param(3, inversify_1.inject(VerticalDeviderBuilder_1.VerticalDeviderBuilder)), __param(4, inversify_1.inject(common_1.DomService)),

@@ -110,12 +110,11 @@ export class BoxLayout
         return this.emitter;
     }
 
-    // public recalc(): void
-    // {
-    //     let deviders: Array<LayoutDevider> = this.layout.getDeviders();
-    //     for (let key in deviders) {
-    //         deviders[key].detectChange();
-    //     }
-    //     this.emitter.emit('wbRecalc', {});
-    // }
+    public recalc(): void
+    {
+        for (let key in this.positions) {
+            this.positions[key].update();
+        }
+        this.emitter.emit('wbRecalc', {});
+    }
 }

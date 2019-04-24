@@ -3,7 +3,13 @@ import { HorizontalDeviderBuilder } from "./HorizontalDeviderBuilder";
 import { BlockBlueprint } from "./block/BlockBlueprint";
 import { ComponentBuilder, Component } from "@wildebeest/component";
 import { VerticalDeviderBuilder } from "./VerticalDeviderBuilder";
+import { Block } from "./block/Block";
 export declare class BoxLayout {
+    static BLOCK_TOP: string;
+    static BLOCK_LEFT: string;
+    static BLOCK_CENTER: string;
+    static BLOCK_RIGHT: string;
+    static BLOCK_BOTTOM: string;
     protected positions: any;
     protected blueprints: any;
     protected emitterService: EmitterService;
@@ -18,6 +24,7 @@ export declare class BoxLayout {
     getPositions(): any;
     protected createDragableDevider(blueprint: BlockBlueprint, builder: ComponentBuilder): Component;
     setBlock(element: any, blockName: string): void;
+    getBlock(blockName: string): Block;
     getEmitter(): Emitter;
     recalc(): void;
 }

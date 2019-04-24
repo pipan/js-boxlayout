@@ -11,6 +11,13 @@ var BlockBlueprint = (function () {
             this.config[i].position.bind(binding);
         }
     };
+    BlockBlueprint.prototype.getPositions = function () {
+        var positions = [];
+        for (var i = 0; i < this.config.length; i++) {
+            positions.push(this.config[i].position);
+        }
+        return positions;
+    };
     return BlockBlueprint;
 }());
 exports.BlockBlueprint = BlockBlueprint;

@@ -19,6 +19,9 @@ var HorizontalBlock = (function () {
     HorizontalBlock.prototype.bind = function (element) {
         this.blueprint.bind(element);
     };
+    HorizontalBlock.prototype.getPositions = function () {
+        return this.blueprint.getPositions();
+    };
     return HorizontalBlock;
 }());
 exports.HorizontalBlock = HorizontalBlock;

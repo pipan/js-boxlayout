@@ -47,6 +47,10 @@ var BoxLayout = (function () {
             bottom: new SceenVerticalPositionValue_1.ScreenVerticalPositionValue(new PositionValue_1.PositionValue(0, 0, viewportService.getHeight()), viewportService),
             left: new ScreenHorizontalPositionValue_1.ScreenHorizontalPositionValue(new PositionValue_1.PositionValue(0, 0, viewportService.getWidth()), viewportService)
         };
+        this.positions.topInverse = new InverseValue_1.InverseValue(this.positions.top);
+        this.positions.rightInverse = new InverseValue_1.InverseValue(this.positions.right);
+        this.positions.bototmInverse = new InverseValue_1.InverseValue(this.positions.bottom);
+        this.positions.leftInverse = new InverseValue_1.InverseValue(this.positions.left);
         this.blueprints = {
             top: new RectangleBlock_1.RecktangleBlock(this.positions.screenTop, this.positions.screenRight, new InverseValue_1.InverseValue(this.positions.top), this.positions.screenLeft),
             left: new RectangleBlock_1.RecktangleBlock(this.positions.top, new InverseValue_1.InverseValue(this.positions.left), this.positions.screenBottom, this.positions.screenLeft),
@@ -66,7 +70,7 @@ var BoxLayout = (function () {
         this.positions.right.setValue(this.config.right || 0);
         this.positions.bottom.setValue(this.config.bottom || 0);
         this.positions.left.setValue(this.config.left || 0);
-        if (config.deviders.dragable) {
+        if (config.deviders && config.deviders.dragable) {
             this.createDragableDevider(this.blueprints.deviderLeft, this.builers.vertical).getEmitter().on('wbDrag', function (event) {
                 _this.positions.left.moveBy(event.horizontal);
             });
@@ -90,6 +94,9 @@ var BoxLayout = (function () {
     BoxLayout.prototype.setBlock = function (element, blockName) {
         this.blueprints[blockName].bind(element);
     };
+    BoxLayout.prototype.getBlock = function (blockName) {
+        return this.blueprints[blockName];
+    };
     BoxLayout.prototype.getEmitter = function () {
         return this.emitter;
     };
@@ -99,6 +106,11 @@ var BoxLayout = (function () {
         }
         this.emitter.emit('wbRecalc', {});
     };
+    BoxLayout.BLOCK_TOP = "top";
+    BoxLayout.BLOCK_LEFT = "left";
+    BoxLayout.BLOCK_CENTER = "center";
+    BoxLayout.BLOCK_RIGHT = "right";
+    BoxLayout.BLOCK_BOTTOM = "bottom";
     BoxLayout = __decorate([
         inversify_1.injectable(),
         __param(0, inversify_1.inject(common_1.EmitterService)), __param(1, inversify_1.inject(common_1.ViewportService)), __param(2, inversify_1.inject(HorizontalDeviderBuilder_1.HorizontalDeviderBuilder)), __param(3, inversify_1.inject(VerticalDeviderBuilder_1.VerticalDeviderBuilder)), __param(4, inversify_1.inject(common_1.DomService)),

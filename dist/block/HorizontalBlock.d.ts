@@ -5,4 +5,5 @@ export declare class HorizontalBlock implements Block {
     protected blueprint: BlockBlueprint;
     constructor(left: AbsolutePosition, right: AbsolutePosition, top: AbsolutePosition);
     bind(element: HTMLElement): void;
+    getPositions(): Array<AbsolutePosition>;
 }

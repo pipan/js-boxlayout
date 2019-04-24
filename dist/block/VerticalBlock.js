@@ -19,6 +19,9 @@ var VerticalBlock = (function () {
     VerticalBlock.prototype.bind = function (element) {
         this.blueprint.bind(element);
     };
+    VerticalBlock.prototype.getPositions = function () {
+        return this.blueprint.getPositions();
+    };
     return VerticalBlock;
 }());
 exports.VerticalBlock = VerticalBlock;

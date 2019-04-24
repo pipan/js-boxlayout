@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var PositionValue = (function () {
     function PositionValue(value, min, max) {
         this.bindings = [];
-        this.inverseBindings = [];
         this.value = 0;
         this.value = value;
         this.min = min;
@@ -11,9 +10,6 @@ var PositionValue = (function () {
     }
     PositionValue.prototype.bind = function (binding) {
         this.bindings.push(binding);
-    };
-    PositionValue.prototype.bindInverse = function (binding) {
-        this.inverseBindings.push(binding);
     };
     PositionValue.prototype.setValue = function (value) {
         value = Math.min(Math.max(value, this.min), this.max);
@@ -32,9 +28,6 @@ var PositionValue = (function () {
     PositionValue.prototype.update = function () {
         for (var i = 0; i < this.bindings.length; i++) {
             this.bindings[i].update(this.value);
-        }
-        for (var i = 0; i < this.inverseBindings.length; i++) {
-            this.inverseBindings[i].update(this.max - this.value);
         }
     };
     PositionValue.prototype.getMax = function () {

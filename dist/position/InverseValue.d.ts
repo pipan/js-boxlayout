@@ -5,7 +5,6 @@ export declare class InverseValue implements AbsolutePosition {
     protected bindings: Array<Binding>;
     constructor(position: AbsolutePosition);
     bind(binding: Binding): void;
-    bindInverse(binding: Binding): void;
     getMax(): number;
     getMin(): number;
     moveBy(value: number): void;

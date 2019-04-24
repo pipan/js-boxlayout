@@ -22,6 +22,9 @@ var RecktangleBlock = (function () {
     RecktangleBlock.prototype.bind = function (element) {
         this.blueprint.bind(element);
     };
+    RecktangleBlock.prototype.getPositions = function () {
+        return this.blueprint.getPositions();
+    };
     return RecktangleBlock;
 }());
 exports.RecktangleBlock = RecktangleBlock;

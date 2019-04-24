@@ -11,10 +11,17 @@ import { ComponentBuilder, Component } from "@wildebeest/component";
 import { VerticalDeviderBuilder } from "./VerticalDeviderBuilder";
 import { InverseValue } from "./position/InverseValue";
 import { PositionValue } from "./position/PositionValue";
+import { Block } from "./block/Block";
 
 @injectable()
 export class BoxLayout
 {
+    public static BLOCK_TOP: string = "top";
+    public static BLOCK_LEFT: string = "left";
+    public static BLOCK_CENTER: string = "center";
+    public static BLOCK_RIGHT: string = "right";
+    public static BLOCK_BOTTOM: string = "bottom";
+
     protected positions: any = {};
     protected blueprints: any = {};
     protected emitterService: EmitterService;
@@ -47,6 +54,11 @@ export class BoxLayout
             left: new ScreenHorizontalPositionValue(new PositionValue(0 , 0, viewportService.getWidth()), viewportService)
         };
 
+        this.positions.topInverse = new InverseValue(this.positions.top);
+        this.positions.rightInverse = new InverseValue(this.positions.right);
+        this.positions.bototmInverse = new InverseValue(this.positions.bottom);
+        this.positions.leftInverse = new InverseValue(this.positions.left);
+
         this.blueprints = {
             top: new RecktangleBlock(this.positions.screenTop, this.positions.screenRight, new InverseValue(this.positions.top), this.positions.screenLeft),
             left: new RecktangleBlock(this.positions.top, new InverseValue(this.positions.left), this.positions.screenBottom, this.positions.screenLeft),
@@ -69,7 +81,7 @@ export class BoxLayout
         this.positions.bottom.setValue(this.config.bottom || 0);
         this.positions.left.setValue(this.config.left || 0);
 
-        if (config.deviders.dragable) {
+        if (config.deviders && config.deviders.dragable) {
             this.createDragableDevider(this.blueprints.deviderLeft, this.builers.vertical).getEmitter().on('wbDrag', (event: any) => {
                 this.positions.left.moveBy(event.horizontal);
             });
@@ -100,6 +112,11 @@ export class BoxLayout
     public setBlock(element: any, blockName: string): void
     {
         this.blueprints[blockName].bind(element);
+    }
+
+    public getBlock(blockName: string): Block
+    {
+        return this.blueprints[blockName];
     }
 
     // public onResize(event: any): void

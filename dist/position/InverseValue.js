@@ -10,15 +10,13 @@ var InverseValue = (function () {
     InverseValue.prototype.bind = function (binding) {
         this.bindings.push(binding);
     };
-    InverseValue.prototype.bindInverse = function (binding) { };
     InverseValue.prototype.getMax = function () {
         return this.position.getMax();
     };
     InverseValue.prototype.getMin = function () {
         return this.position.getMin();
     };
-    InverseValue.prototype.moveBy = function (value) {
-    };
+    InverseValue.prototype.moveBy = function (value) { };
     InverseValue.prototype.getValue = function () {
         return this.getMax() - this.position.getValue();
     };

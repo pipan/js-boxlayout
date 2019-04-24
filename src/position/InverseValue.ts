@@ -17,7 +17,6 @@ export class InverseValue implements AbsolutePosition
     {
         this.bindings.push(binding);
     }
-    bindInverse(binding: Binding): void { }
 
     getMax(): number
     {
@@ -29,10 +28,7 @@ export class InverseValue implements AbsolutePosition
         return this.position.getMin();
     }
 
-    moveBy(value: number): void 
-    {
-        
-    }
+    moveBy(value: number): void { }
 
     getValue(): number
     {

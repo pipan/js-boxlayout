@@ -26,4 +26,9 @@ export class HorizontalBlock implements Block
     {
         this.blueprint.bind(element);
     }
+
+    getPositions(): Array<AbsolutePosition>
+    {
+        return this.blueprint.getPositions();
+    }
 }

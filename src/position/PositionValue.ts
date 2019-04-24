@@ -4,7 +4,6 @@ import { AbsolutePosition } from './AbsolutePosition';
 export class PositionValue implements AbsolutePosition
 {
     protected bindings: Array<Binding> = [];
-    protected inverseBindings: Array<Binding> = [];
     protected value: number = 0;
     protected min: number;
     protected max: number;
@@ -19,11 +18,6 @@ export class PositionValue implements AbsolutePosition
     public bind(binding: Binding): void
     {
         this.bindings.push(binding);
-    }
-
-    public bindInverse(binding: Binding): void
-    {
-        this.inverseBindings.push(binding);
     }
 
     public setValue(value: number): void
@@ -50,9 +44,6 @@ export class PositionValue implements AbsolutePosition
     {
         for (let i = 0; i < this.bindings.length; i++) {
             this.bindings[i].update(this.value);
-        }
-        for (let i = 0; i < this.inverseBindings.length; i++) {
-            this.inverseBindings[i].update(this.max - this.value);
         }
     }
 

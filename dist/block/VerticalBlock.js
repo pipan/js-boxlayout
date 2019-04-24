@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var BlockBlueprint_1 = require("./BlockBlueprint");
 var VerticalBlock = (function () {
-    function VerticalBlock(top, bottom, left) {
-        this.blueprint = new BlockBlueprint_1.BlockBlueprint([
+    function VerticalBlock(emitter, top, bottom, left) {
+        this.blueprint = new BlockBlueprint_1.BlockBlueprint(emitter, [
             {
                 elementProperty: 'style.top',
                 position: top

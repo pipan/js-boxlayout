@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var BlockBlueprint_1 = require("./BlockBlueprint");
 var RecktangleBlock = (function () {
-    function RecktangleBlock(top, right, bottom, left) {
-        this.blueprint = new BlockBlueprint_1.BlockBlueprint([
+    function RecktangleBlock(emitter, top, right, bottom, left) {
+        this.blueprint = new BlockBlueprint_1.BlockBlueprint(emitter, [
             {
                 elementProperty: 'style.top',
                 position: top
@@ -18,6 +18,7 @@ var RecktangleBlock = (function () {
                 position: left
             }
         ]);
+        this.blueprint;
     }
     RecktangleBlock.prototype.bind = function (element) {
         this.blueprint.bind(element);

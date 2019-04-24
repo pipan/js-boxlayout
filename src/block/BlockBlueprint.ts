@@ -2,14 +2,26 @@ import { Binding } from "../binding/Binding";
 import { Block } from "./Block";
 import { PixelsBinding } from "../binding/PixelsBinding";
 import { AbsolutePosition } from "../position/AbsolutePosition";
+import { Emitter } from "@wildebeest/common";
+import { CallbackBinding } from "../binding/CallbackBinding";
 
 export class BlockBlueprint implements Block
 {
     protected config: Array<any>;
+    protected emitter: Emitter;
 
-    constructor(config: Array<any>)
+    constructor(emitter: Emitter, config: Array<any>)
     {
+        this.emitter = emitter;
         this.config = config;
+
+        for (let i = 0; i < config.length; i++) {
+            this.config[i].position.bind(new CallbackBinding(() => {
+                this.emitter.emit('change', {
+                    positions: this.getPositions()
+                });
+            }))
+        }
     }
 
     bind(element: HTMLElement): void

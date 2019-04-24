@@ -11,7 +11,7 @@ export declare class BoxLayout {
     static BLOCK_RIGHT: string;
     static BLOCK_BOTTOM: string;
     protected positions: any;
-    protected blueprints: any;
+    protected blocks: any;
     protected emitterService: EmitterService;
     protected emitter: Emitter;
     protected viewportService: ViewportService;
@@ -22,8 +22,8 @@ export declare class BoxLayout {
     constructor(emitterService: EmitterService, viewportService: ViewportService, horizontalBuilder: HorizontalDeviderBuilder, verticalBuilder: VerticalDeviderBuilder, domService: DomService);
     initialize(element: HTMLElement, config: any): void;
     getPositions(): any;
-    protected createDragableDevider(blueprint: BlockBlueprint, builder: ComponentBuilder): Component;
-    setBlock(element: any, blockName: string): void;
+    protected createDragableDevider(block: BlockBlueprint, builder: ComponentBuilder): Component;
+    bindElement(element: any, blockName: string): Block;
     getBlock(blockName: string): Block;
     getEmitter(): Emitter;
     recalc(): void;

@@ -18,11 +18,11 @@ test("resize screen", () => {
         right: 200,
         bottom: 100
     });
-    boxLayout.setBlock(element.querySelector('.top'), BoxLayout.BLOCK_TOP);
-    boxLayout.setBlock(element.querySelector('.left'), BoxLayout.BLOCK_LEFT);
-    boxLayout.setBlock(element.querySelector('.center'), BoxLayout.BLOCK_CENTER);
-    boxLayout.setBlock(element.querySelector('.right'), BoxLayout.BLOCK_RIGHT);
-    boxLayout.setBlock(element.querySelector('.bottom'), BoxLayout.BLOCK_BOTTOM);
+    boxLayout.bindElement(element.querySelector('.top'), BoxLayout.BLOCK_TOP);
+    boxLayout.bindElement(element.querySelector('.left'), BoxLayout.BLOCK_LEFT);
+    boxLayout.bindElement(element.querySelector('.center'), BoxLayout.BLOCK_CENTER);
+    boxLayout.bindElement(element.querySelector('.right'), BoxLayout.BLOCK_RIGHT);
+    boxLayout.bindElement(element.querySelector('.bottom'), BoxLayout.BLOCK_BOTTOM);
 
     viewportService.getEmitter().emit('change', {
         vertical: 400,

@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var BlockBlueprint_1 = require("./BlockBlueprint");
 var HorizontalBlock = (function () {
-    function HorizontalBlock(left, right, top) {
-        this.blueprint = new BlockBlueprint_1.BlockBlueprint([
+    function HorizontalBlock(emitter, left, right, top) {
+        this.blueprint = new BlockBlueprint_1.BlockBlueprint(emitter, [
             {
                 elementProperty: 'style.left',
                 position: left

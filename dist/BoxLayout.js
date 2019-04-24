@@ -26,7 +26,7 @@ var PositionValue_1 = require("./position/PositionValue");
 var BoxLayout = (function () {
     function BoxLayout(emitterService, viewportService, horizontalBuilder, verticalBuilder, domService) {
         this.positions = {};
-        this.blueprints = {};
+        this.blocks = {};
         this.config = {};
         this.builers = {};
         this.emitterService = emitterService;
@@ -47,15 +47,15 @@ var BoxLayout = (function () {
             bottom: new SceenVerticalPositionValue_1.ScreenVerticalPositionValue(new PositionValue_1.PositionValue(0, 0, viewportService.getHeight()), viewportService),
             left: new ScreenHorizontalPositionValue_1.ScreenHorizontalPositionValue(new PositionValue_1.PositionValue(0, 0, viewportService.getWidth()), viewportService)
         };
-        this.blueprints = {
-            top: new RectangleBlock_1.RecktangleBlock(this.positions.screenTop, this.positions.screenRight, new InverseValue_1.InverseValue(this.positions.top), this.positions.screenLeft),
-            left: new RectangleBlock_1.RecktangleBlock(this.positions.top, new InverseValue_1.InverseValue(this.positions.left), this.positions.screenBottom, this.positions.screenLeft),
-            center: new RectangleBlock_1.RecktangleBlock(this.positions.top, this.positions.right, this.positions.bottom, this.positions.left),
-            right: new RectangleBlock_1.RecktangleBlock(this.positions.top, this.positions.screenRight, this.positions.bottom, new InverseValue_1.InverseValue(this.positions.right)),
-            bottom: new RectangleBlock_1.RecktangleBlock(new InverseValue_1.InverseValue(this.positions.bottom), this.positions.screenRight, this.positions.screenBottom, this.positions.left),
-            deviderLeft: new VerticalBlock_1.VerticalBlock(this.positions.top, this.positions.screenBottom, this.positions.left),
-            deviderRight: new VerticalBlock_1.VerticalBlock(this.positions.top, this.positions.bottom, new InverseValue_1.InverseValue(this.positions.right)),
-            deviderBottom: new HorizontalBlock_1.HorizontalBlock(this.positions.left, this.positions.screenRight, new InverseValue_1.InverseValue(this.positions.bottom))
+        this.blocks = {
+            top: new RectangleBlock_1.RecktangleBlock(this.emitterService.createEmitter(), this.positions.screenTop, this.positions.screenRight, new InverseValue_1.InverseValue(this.positions.top), this.positions.screenLeft),
+            left: new RectangleBlock_1.RecktangleBlock(this.emitterService.createEmitter(), this.positions.top, new InverseValue_1.InverseValue(this.positions.left), this.positions.screenBottom, this.positions.screenLeft),
+            center: new RectangleBlock_1.RecktangleBlock(this.emitterService.createEmitter(), this.positions.top, this.positions.right, this.positions.bottom, this.positions.left),
+            right: new RectangleBlock_1.RecktangleBlock(this.emitterService.createEmitter(), this.positions.top, this.positions.screenRight, this.positions.bottom, new InverseValue_1.InverseValue(this.positions.right)),
+            bottom: new RectangleBlock_1.RecktangleBlock(this.emitterService.createEmitter(), new InverseValue_1.InverseValue(this.positions.bottom), this.positions.screenRight, this.positions.screenBottom, this.positions.left),
+            deviderLeft: new VerticalBlock_1.VerticalBlock(this.emitterService.createEmitter(), this.positions.top, this.positions.screenBottom, this.positions.left),
+            deviderRight: new VerticalBlock_1.VerticalBlock(this.emitterService.createEmitter(), this.positions.top, this.positions.bottom, new InverseValue_1.InverseValue(this.positions.right)),
+            deviderBottom: new HorizontalBlock_1.HorizontalBlock(this.emitterService.createEmitter(), this.positions.left, this.positions.screenRight, new InverseValue_1.InverseValue(this.positions.bottom))
         };
     }
     BoxLayout.prototype.initialize = function (element, config) {
@@ -67,13 +67,13 @@ var BoxLayout = (function () {
         this.positions.bottom.setValue(this.config.bottom || 0);
         this.positions.left.setValue(this.config.left || 0);
         if (config.deviders && config.deviders.dragable) {
-            this.createDragableDevider(this.blueprints.deviderLeft, this.builers.vertical).getEmitter().on('wbDrag', function (event) {
+            this.createDragableDevider(this.blocks.deviderLeft, this.builers.vertical).getEmitter().on('wbDrag', function (event) {
                 _this.positions.left.moveBy(event.horizontal);
             });
-            this.createDragableDevider(this.blueprints.deviderRight, this.builers.vertical).getEmitter().on('wbDrag', function (event) {
+            this.createDragableDevider(this.blocks.deviderRight, this.builers.vertical).getEmitter().on('wbDrag', function (event) {
                 _this.positions.right.moveBy(-event.horizontal);
             });
-            this.createDragableDevider(this.blueprints.deviderBottom, this.builers.horizontal).getEmitter().on('wbDrag', function (event) {
+            this.createDragableDevider(this.blocks.deviderBottom, this.builers.horizontal).getEmitter().on('wbDrag', function (event) {
                 _this.positions.bottom.moveBy(-event.vertical);
             });
         }
@@ -81,17 +81,18 @@ var BoxLayout = (function () {
     BoxLayout.prototype.getPositions = function () {
         return this.positions;
     };
-    BoxLayout.prototype.createDragableDevider = function (blueprint, builder) {
+    BoxLayout.prototype.createDragableDevider = function (block, builder) {
         var deviderElement = builder.build({});
         this.domService.insert([deviderElement.getElement()], this.element);
-        blueprint.bind(deviderElement.getElement());
+        block.bind(deviderElement.getElement());
         return deviderElement;
     };
-    BoxLayout.prototype.setBlock = function (element, blockName) {
-        this.blueprints[blockName].bind(element);
+    BoxLayout.prototype.bindElement = function (element, blockName) {
+        this.blocks[blockName].bind(element);
+        return this.getBlock(blockName);
     };
     BoxLayout.prototype.getBlock = function (blockName) {
-        return this.blueprints[blockName];
+        return this.blocks[blockName];
     };
     BoxLayout.prototype.getEmitter = function () {
         return this.emitter;

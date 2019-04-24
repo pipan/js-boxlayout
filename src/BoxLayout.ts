@@ -23,7 +23,7 @@ export class BoxLayout
     public static BLOCK_BOTTOM: string = "bottom";
 
     protected positions: any = {};
-    protected blueprints: any = {};
+    protected blocks: any = {};
     protected emitterService: EmitterService;
     protected emitter: Emitter;
     protected viewportService: ViewportService;
@@ -54,15 +54,15 @@ export class BoxLayout
             left: new ScreenHorizontalPositionValue(new PositionValue(0 , 0, viewportService.getWidth()), viewportService)
         };
 
-        this.blueprints = {
-            top: new RecktangleBlock(this.positions.screenTop, this.positions.screenRight, new InverseValue(this.positions.top), this.positions.screenLeft),
-            left: new RecktangleBlock(this.positions.top, new InverseValue(this.positions.left), this.positions.screenBottom, this.positions.screenLeft),
-            center: new RecktangleBlock(this.positions.top, this.positions.right, this.positions.bottom, this.positions.left),
-            right: new RecktangleBlock(this.positions.top, this.positions.screenRight, this.positions.bottom, new InverseValue(this.positions.right)),
-            bottom: new RecktangleBlock(new InverseValue(this.positions.bottom), this.positions.screenRight, this.positions.screenBottom, this.positions.left),
-            deviderLeft: new VerticalBlock(this.positions.top, this.positions.screenBottom, this.positions.left),
-            deviderRight: new VerticalBlock(this.positions.top, this.positions.bottom, new InverseValue(this.positions.right)),
-            deviderBottom: new HorizontalBlock(this.positions.left, this.positions.screenRight, new InverseValue(this.positions.bottom))
+        this.blocks = {
+            top: new RecktangleBlock(this.emitterService.createEmitter(), this.positions.screenTop, this.positions.screenRight, new InverseValue(this.positions.top), this.positions.screenLeft),
+            left: new RecktangleBlock(this.emitterService.createEmitter(), this.positions.top, new InverseValue(this.positions.left), this.positions.screenBottom, this.positions.screenLeft),
+            center: new RecktangleBlock(this.emitterService.createEmitter(), this.positions.top, this.positions.right, this.positions.bottom, this.positions.left),
+            right: new RecktangleBlock(this.emitterService.createEmitter(), this.positions.top, this.positions.screenRight, this.positions.bottom, new InverseValue(this.positions.right)),
+            bottom: new RecktangleBlock(this.emitterService.createEmitter(), new InverseValue(this.positions.bottom), this.positions.screenRight, this.positions.screenBottom, this.positions.left),
+            deviderLeft: new VerticalBlock(this.emitterService.createEmitter(), this.positions.top, this.positions.screenBottom, this.positions.left),
+            deviderRight: new VerticalBlock(this.emitterService.createEmitter(), this.positions.top, this.positions.bottom, new InverseValue(this.positions.right)),
+            deviderBottom: new HorizontalBlock(this.emitterService.createEmitter(), this.positions.left, this.positions.screenRight, new InverseValue(this.positions.bottom))
         }
     }
 
@@ -77,13 +77,13 @@ export class BoxLayout
         this.positions.left.setValue(this.config.left || 0);
 
         if (config.deviders && config.deviders.dragable) {
-            this.createDragableDevider(this.blueprints.deviderLeft, this.builers.vertical).getEmitter().on('wbDrag', (event: any) => {
+            this.createDragableDevider(this.blocks.deviderLeft, this.builers.vertical).getEmitter().on('wbDrag', (event: any) => {
                 this.positions.left.moveBy(event.horizontal);
             });
-            this.createDragableDevider(this.blueprints.deviderRight, this.builers.vertical).getEmitter().on('wbDrag', (event: any) => {
+            this.createDragableDevider(this.blocks.deviderRight, this.builers.vertical).getEmitter().on('wbDrag', (event: any) => {
                 this.positions.right.moveBy(-event.horizontal);
             });
-            this.createDragableDevider(this.blueprints.deviderBottom, this.builers.horizontal).getEmitter().on('wbDrag', (event: any) => {
+            this.createDragableDevider(this.blocks.deviderBottom, this.builers.horizontal).getEmitter().on('wbDrag', (event: any) => {
                 this.positions.bottom.moveBy(-event.vertical);
             });
         }
@@ -96,22 +96,23 @@ export class BoxLayout
         return this.positions;
     }
 
-    protected createDragableDevider(blueprint: BlockBlueprint, builder: ComponentBuilder): Component
+    protected createDragableDevider(block: BlockBlueprint, builder: ComponentBuilder): Component
     {
         let deviderElement: Component = builder.build({});
         this.domService.insert([deviderElement.getElement()], this.element);
-        blueprint.bind(deviderElement.getElement());
+        block.bind(deviderElement.getElement());
         return deviderElement;
     }
 
-    public setBlock(element: any, blockName: string): void
+    public bindElement(element: any, blockName: string): Block
     {
-        this.blueprints[blockName].bind(element);
+        this.blocks[blockName].bind(element);
+        return this.getBlock(blockName);
     }
 
     public getBlock(blockName: string): Block
     {
-        return this.blueprints[blockName];
+        return this.blocks[blockName];
     }
 
     public getEmitter(): Emitter

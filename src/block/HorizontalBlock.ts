@@ -1,14 +1,15 @@
 import { Block } from "./Block";
 import { BlockBlueprint } from "./BlockBlueprint";
 import { AbsolutePosition } from "../position/AbsolutePosition";
+import { Emitter } from "@wildebeest/common";
 
 export class HorizontalBlock implements Block
 {
     protected blueprint: BlockBlueprint;
 
-    constructor(left: AbsolutePosition, right: AbsolutePosition, top: AbsolutePosition)
+    constructor(emitter: Emitter, left: AbsolutePosition, right: AbsolutePosition, top: AbsolutePosition)
     {
-        this.blueprint = new BlockBlueprint([
+        this.blueprint = new BlockBlueprint(emitter, [
             {
                 elementProperty: 'style.left',
                 position: left

@@ -10,6 +10,7 @@ import { BlockBlueprint } from "./block/BlockBlueprint";
 import { ComponentBuilder, Component } from "@wildebeest/component";
 import { VerticalDeviderBuilder } from "./VerticalDeviderBuilder";
 import { InverseValue } from "./position/InverseValue";
+import { PositionValue } from "./position/PositionValue";
 
 @injectable()
 export class BoxLayout
@@ -36,14 +37,14 @@ export class BoxLayout
         };
 
         this.positions = {
-            screenTop: new ScreenVerticalPositionValue(0, viewportService),
-            screenRight: new ScreenHorizontalPositionValue(0, viewportService),
-            screenBottom: new ScreenVerticalPositionValue(0, viewportService),
-            screenLeft: new ScreenHorizontalPositionValue(0, viewportService),
-            top: new ScreenVerticalPositionValue(0, viewportService),
-            right: new ScreenHorizontalPositionValue(0, viewportService),
-            bottom: new ScreenVerticalPositionValue(0, viewportService),
-            left: new ScreenHorizontalPositionValue(0, viewportService)
+            screenTop: new ScreenVerticalPositionValue(new PositionValue(0 , 0, viewportService.getHeight()), viewportService),
+            screenRight: new ScreenHorizontalPositionValue(new PositionValue(0 , 0, viewportService.getWidth()), viewportService),
+            screenBottom: new ScreenVerticalPositionValue(new PositionValue(0 , 0, viewportService.getHeight()), viewportService),
+            screenLeft: new ScreenHorizontalPositionValue(new PositionValue(0 , 0, viewportService.getWidth()), viewportService),
+            top: new ScreenVerticalPositionValue(new PositionValue(0 , 0, viewportService.getHeight()), viewportService),
+            right: new ScreenHorizontalPositionValue(new PositionValue(0 , 0, viewportService.getWidth()), viewportService),
+            bottom: new ScreenVerticalPositionValue(new PositionValue(0 , 0, viewportService.getHeight()), viewportService),
+            left: new ScreenHorizontalPositionValue(new PositionValue(0 , 0, viewportService.getWidth()), viewportService)
         };
 
         this.blueprints = {
@@ -76,7 +77,7 @@ export class BoxLayout
                 this.positions.right.moveBy(-event.horizontal);
             });
             this.createDragableDevider(this.blueprints.deviderBottom, this.builers.horizontal).getEmitter().on('wbDrag', (event: any) => {
-                this.positions.bottom.moveBy(event.vertical);
+                this.positions.bottom.moveBy(-event.vertical);
             });
         }
 

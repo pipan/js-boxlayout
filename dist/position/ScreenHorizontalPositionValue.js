@@ -1,29 +1,44 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var PositionValue_1 = require("./PositionValue");
-var ScreenHorizontalPositionValue = (function (_super) {
-    __extends(ScreenHorizontalPositionValue, _super);
-    function ScreenHorizontalPositionValue(value, viewportService) {
-        var _this = _super.call(this, value, 0, viewportService.getWidth()) || this;
+var ScreenHorizontalPositionValue = (function () {
+    function ScreenHorizontalPositionValue(position, viewportService) {
+        var _this = this;
+        this.position = position;
         viewportService.getEmitter().on('change', function (event) {
             _this.setMax(event.horizontal);
         });
-        return _this;
     }
+    ScreenHorizontalPositionValue.prototype.bind = function (binding) {
+        this.position.bind(binding);
+    };
+    ScreenHorizontalPositionValue.prototype.getMax = function () {
+        return this.position.getMax();
+    };
+    ScreenHorizontalPositionValue.prototype.getMin = function () {
+        return this.position.getMin();
+    };
+    ScreenHorizontalPositionValue.prototype.getValue = function () {
+        return this.position.getValue();
+    };
+    ScreenHorizontalPositionValue.prototype.moveBy = function (value) {
+        this.position.moveBy(value);
+    };
+    ScreenHorizontalPositionValue.prototype.setMax = function (max) {
+        this.position.setMax(max);
+        this.update();
+    };
+    ScreenHorizontalPositionValue.prototype.setMin = function (min) {
+        this.position.setMin(min);
+        this.update();
+    };
+    ScreenHorizontalPositionValue.prototype.setValue = function (value) {
+        this.position.setValue(value);
+        this.update();
+    };
+    ScreenHorizontalPositionValue.prototype.update = function () {
+        this.position.update();
+    };
     return ScreenHorizontalPositionValue;
-}(PositionValue_1.PositionValue));
+}());
 exports.ScreenHorizontalPositionValue = ScreenHorizontalPositionValue;
 //# sourceMappingURL=ScreenHorizontalPositionValue.js.map

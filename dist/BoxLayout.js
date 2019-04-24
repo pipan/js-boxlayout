@@ -22,6 +22,7 @@ var VerticalBlock_1 = require("./block/VerticalBlock");
 var HorizontalBlock_1 = require("./block/HorizontalBlock");
 var VerticalDeviderBuilder_1 = require("./VerticalDeviderBuilder");
 var InverseValue_1 = require("./position/InverseValue");
+var PositionValue_1 = require("./position/PositionValue");
 var BoxLayout = (function () {
     function BoxLayout(emitterService, viewportService, horizontalBuilder, verticalBuilder, domService) {
         this.positions = {};
@@ -37,14 +38,14 @@ var BoxLayout = (function () {
             horizontal: horizontalBuilder
         };
         this.positions = {
-            screenTop: new SceenVerticalPositionValue_1.ScreenVerticalPositionValue(0, viewportService),
-            screenRight: new ScreenHorizontalPositionValue_1.ScreenHorizontalPositionValue(0, viewportService),
-            screenBottom: new SceenVerticalPositionValue_1.ScreenVerticalPositionValue(0, viewportService),
-            screenLeft: new ScreenHorizontalPositionValue_1.ScreenHorizontalPositionValue(0, viewportService),
-            top: new SceenVerticalPositionValue_1.ScreenVerticalPositionValue(0, viewportService),
-            right: new ScreenHorizontalPositionValue_1.ScreenHorizontalPositionValue(0, viewportService),
-            bottom: new SceenVerticalPositionValue_1.ScreenVerticalPositionValue(0, viewportService),
-            left: new ScreenHorizontalPositionValue_1.ScreenHorizontalPositionValue(0, viewportService)
+            screenTop: new SceenVerticalPositionValue_1.ScreenVerticalPositionValue(new PositionValue_1.PositionValue(0, 0, viewportService.getHeight()), viewportService),
+            screenRight: new ScreenHorizontalPositionValue_1.ScreenHorizontalPositionValue(new PositionValue_1.PositionValue(0, 0, viewportService.getWidth()), viewportService),
+            screenBottom: new SceenVerticalPositionValue_1.ScreenVerticalPositionValue(new PositionValue_1.PositionValue(0, 0, viewportService.getHeight()), viewportService),
+            screenLeft: new ScreenHorizontalPositionValue_1.ScreenHorizontalPositionValue(new PositionValue_1.PositionValue(0, 0, viewportService.getWidth()), viewportService),
+            top: new SceenVerticalPositionValue_1.ScreenVerticalPositionValue(new PositionValue_1.PositionValue(0, 0, viewportService.getHeight()), viewportService),
+            right: new ScreenHorizontalPositionValue_1.ScreenHorizontalPositionValue(new PositionValue_1.PositionValue(0, 0, viewportService.getWidth()), viewportService),
+            bottom: new SceenVerticalPositionValue_1.ScreenVerticalPositionValue(new PositionValue_1.PositionValue(0, 0, viewportService.getHeight()), viewportService),
+            left: new ScreenHorizontalPositionValue_1.ScreenHorizontalPositionValue(new PositionValue_1.PositionValue(0, 0, viewportService.getWidth()), viewportService)
         };
         this.blueprints = {
             top: new RectangleBlock_1.RecktangleBlock(this.positions.screenTop, this.positions.screenRight, new InverseValue_1.InverseValue(this.positions.top), this.positions.screenLeft),
@@ -73,7 +74,7 @@ var BoxLayout = (function () {
                 _this.positions.right.moveBy(-event.horizontal);
             });
             this.createDragableDevider(this.blueprints.deviderBottom, this.builers.horizontal).getEmitter().on('wbDrag', function (event) {
-                _this.positions.bottom.moveBy(event.vertical);
+                _this.positions.bottom.moveBy(-event.vertical);
             });
         }
     };

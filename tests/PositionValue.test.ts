@@ -39,16 +39,3 @@ test("max change", () => {
     position.setValue(400);
     expect(object.value).toEqual(300);
 });
-
-test("inverse binding", () => {
-    object = {
-        value: 0
-    };
-    let binding: Binding = new OneWayBinding(object, "value");
-    position = new PositionValue(0, 0, 100);
-    position.bindInverse(binding);
-
-    position.setMax(300);
-    position.setValue(100);
-    expect(object.value).toEqual(200);
-});

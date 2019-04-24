@@ -10,7 +10,7 @@ export class ScreenHorizontalPositionValue implements AbsolutePosition
     {
         this.position = position;
         viewportService.getEmitter().on('change', (event: any) => {
-            this.setMax(event.horizontal);
+            this.setMax(event.width);
         });
     }
 

@@ -25,8 +25,8 @@ test("resize screen", () => {
     boxLayout.bindElement(element.querySelector('.bottom'), BoxLayout.BLOCK_BOTTOM);
 
     viewportService.getEmitter().emit('change', {
-        vertical: 400,
-        horizontal: 900
+        height: 400,
+        width: 900
     });
 
     expect(boxLayout.getBlock(BoxLayout.BLOCK_CENTER).getPositions()[1].getValue()).toEqual(200);

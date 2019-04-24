@@ -5,7 +5,7 @@ var ScreenVerticalPositionValue = (function () {
         var _this = this;
         this.position = position;
         viewportService.getEmitter().on('change', function (event) {
-            _this.setMax(event.vertical);
+            _this.setMax(event.height);
         });
     }
     ScreenVerticalPositionValue.prototype.bind = function (binding) {

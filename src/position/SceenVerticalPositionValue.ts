@@ -10,7 +10,7 @@ export class ScreenVerticalPositionValue implements AbsolutePosition
     {
         this.position = position;
         viewportService.getEmitter().on('change', (event: any) => {
-            this.setMax(event.vertical);
+            this.setMax(event.height);
         });
     }
 

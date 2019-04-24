@@ -5,7 +5,7 @@ var ScreenHorizontalPositionValue = (function () {
         var _this = this;
         this.position = position;
         viewportService.getEmitter().on('change', function (event) {
-            _this.setMax(event.horizontal);
+            _this.setMax(event.width);
         });
     }
     ScreenHorizontalPositionValue.prototype.bind = function (binding) {

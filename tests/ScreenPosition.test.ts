@@ -14,8 +14,8 @@ test("screen horizontal resize", () => {
     let horizontal: AbsolutePosition = new ScreenHorizontalPositionValue(new PositionValue(0 , 0, viewportService.getWidth()), viewportService);
 
     viewportService.getEmitter().emit("change", {
-        vertical: 200,
-        horizontal: 300
+        height: 200,
+        width: 300
     });
 
     horizontal.setValue(1000);
@@ -27,8 +27,8 @@ test("screen vertical resize", () => {
     let vertical: AbsolutePosition = new ScreenVerticalPositionValue(new PositionValue(0 , 0, viewportService.getHeight()), viewportService);
 
     viewportService.getEmitter().emit("change", {
-        vertical: 200,
-        horizontal: 300
+        height: 200,
+        width: 300
     });
 
     vertical.setValue(1000);

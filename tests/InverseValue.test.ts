@@ -25,8 +25,8 @@ test("invert screen value", () => {
     let inverse: AbsolutePosition = new InverseValue(position);
 
     viewportService.getEmitter().emit('change', {
-        vertical: 80,
-        horizontal: 100
+        height: 80,
+        width: 100
     });
 
     expect(inverse.getValue()).toEqual(60);

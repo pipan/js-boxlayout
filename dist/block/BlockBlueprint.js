@@ -1,18 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var PixelsBinding_1 = require("../binding/PixelsBinding");
-var CallbackBinding_1 = require("../binding/CallbackBinding");
 var BlockBlueprint = (function () {
     function BlockBlueprint(emitter, config) {
         var _this = this;
         this.emitter = emitter;
         this.config = config;
         for (var i = 0; i < config.length; i++) {
-            this.config[i].position.bind(new CallbackBinding_1.CallbackBinding(function () {
-                _this.emitter.emit('change', {
+            this.config[i].position.getEmitter().on('afterUpdate', function (event) {
+                _this.emitter.emit('resize', {
                     positions: _this.getPositions()
                 });
-            }));
+            });
         }
     }
     BlockBlueprint.prototype.bind = function (element) {
@@ -28,6 +27,9 @@ var BlockBlueprint = (function () {
             positions.push(this.config[i].position);
         }
         return positions;
+    };
+    BlockBlueprint.prototype.getEmitter = function () {
+        return this.emitter;
     };
     return BlockBlueprint;
 }());

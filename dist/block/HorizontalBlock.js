@@ -22,6 +22,9 @@ var HorizontalBlock = (function () {
     HorizontalBlock.prototype.getPositions = function () {
         return this.blueprint.getPositions();
     };
+    HorizontalBlock.prototype.getEmitter = function () {
+        return this.blueprint.getEmitter();
+    };
     return HorizontalBlock;
 }());
 exports.HorizontalBlock = HorizontalBlock;

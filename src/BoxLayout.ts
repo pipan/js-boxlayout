@@ -24,7 +24,7 @@ export class BoxLayout
     public static BLOCK_BOTTOM: string = "bottom";
 
     protected positions: { [key: string]: AbsolutePosition } = {};
-    protected blocks: any = {};
+    protected blocks: { [key: string]: Block } = {};
     protected emitterService: EmitterService;
     protected emitter: Emitter;
     protected viewportService: ViewportService;
@@ -66,11 +66,20 @@ export class BoxLayout
             deviderBottom: new HorizontalBlock(this.emitterService.createEmitter(), this.positions.left, this.positions.screenRight, new InverseValue(this.positions.bottom))
         }
 
+        for (let key of ["top", "left", "center", "right", "bottom"]) {
+            this.blocks[key].getEmitter().on('resize', (event: any) => {
+                this.emitter.emit('blockResize', {
+                    blockName: key,
+                    positions: event.positions
+                });
+            });
+        }
+
         for (let key in this.positions) {
             this.positions[key].getEmitter().on('afterUpdate', (event: any) => {
                 this.emitter.emit('resize', {
                     position: this.positions[key],
-                    value: event.vaue,
+                    value: event.value,
                     min: event.min,
                     max: event.max
                 });
@@ -106,7 +115,7 @@ export class BoxLayout
         return this.positions;
     }
 
-    protected createDragableDevider(block: BlockBlueprint, builder: ComponentBuilder): Component
+    protected createDragableDevider(block: Block, builder: ComponentBuilder): Component
     {
         let deviderElement: Component = builder.build({});
         this.domService.insert([deviderElement.getElement()], this.element);

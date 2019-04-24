@@ -7,4 +7,5 @@ export declare class HorizontalBlock implements Block {
     constructor(emitter: Emitter, left: AbsolutePosition, right: AbsolutePosition, top: AbsolutePosition);
     bind(element: HTMLElement): void;
     getPositions(): Array<AbsolutePosition>;
+    getEmitter(): Emitter;
 }

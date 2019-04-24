@@ -59,18 +59,31 @@ var BoxLayout = (function () {
             deviderBottom: new HorizontalBlock_1.HorizontalBlock(this.emitterService.createEmitter(), this.positions.left, this.positions.screenRight, new InverseValue_1.InverseValue(this.positions.bottom))
         };
         var _loop_1 = function (key) {
-            this_1.positions[key].getEmitter().on('afterUpdate', function (event) {
+            this_1.blocks[key].getEmitter().on('resize', function (event) {
+                _this.emitter.emit('blockResize', {
+                    blockName: key,
+                    positions: event.positions
+                });
+            });
+        };
+        var this_1 = this;
+        for (var _i = 0, _a = ["top", "left", "center", "right", "bottom"]; _i < _a.length; _i++) {
+            var key = _a[_i];
+            _loop_1(key);
+        }
+        var _loop_2 = function (key) {
+            this_2.positions[key].getEmitter().on('afterUpdate', function (event) {
                 _this.emitter.emit('resize', {
                     position: _this.positions[key],
-                    value: event.vaue,
+                    value: event.value,
                     min: event.min,
                     max: event.max
                 });
             });
         };
-        var this_1 = this;
+        var this_2 = this;
         for (var key in this.positions) {
-            _loop_1(key);
+            _loop_2(key);
         }
     }
     BoxLayout.prototype.initialize = function (element, config) {

@@ -1,6 +1,5 @@
 import { EmitterService, Emitter, ViewportService, DomService } from "@wildebeest/common";
 import { HorizontalDeviderBuilder } from "./HorizontalDeviderBuilder";
-import { BlockBlueprint } from "./block/BlockBlueprint";
 import { ComponentBuilder, Component } from "@wildebeest/component";
 import { VerticalDeviderBuilder } from "./VerticalDeviderBuilder";
 import { Block } from "./block/Block";
@@ -14,7 +13,9 @@ export declare class BoxLayout {
     protected positions: {
         [key: string]: AbsolutePosition;
     };
-    protected blocks: any;
+    protected blocks: {
+        [key: string]: Block;
+    };
     protected emitterService: EmitterService;
     protected emitter: Emitter;
     protected viewportService: ViewportService;
@@ -25,7 +26,7 @@ export declare class BoxLayout {
     constructor(emitterService: EmitterService, viewportService: ViewportService, horizontalBuilder: HorizontalDeviderBuilder, verticalBuilder: VerticalDeviderBuilder, domService: DomService);
     initialize(element: HTMLElement, config: any): void;
     getPositions(): any;
-    protected createDragableDevider(block: BlockBlueprint, builder: ComponentBuilder): Component;
+    protected createDragableDevider(block: Block, builder: ComponentBuilder): Component;
     bindElement(element: any, blockName: string): Block;
     getBlock(blockName: string): Block;
     getEmitter(): Emitter;

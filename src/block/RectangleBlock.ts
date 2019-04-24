@@ -37,4 +37,9 @@ export class RecktangleBlock implements Block
     {
         return this.blueprint.getPositions();
     }
+
+    getEmitter(): Emitter
+    {
+        return this.blueprint.getEmitter();
+    }
 }

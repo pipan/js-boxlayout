@@ -7,7 +7,7 @@ import { CallbackBinding } from "../binding/CallbackBinding";
 
 export class BlockBlueprint implements Block
 {
-    protected config: Array<any>;
+    protected config: Array<{position: AbsolutePosition, elementProperty: string}>;
     protected emitter: Emitter;
 
     constructor(emitter: Emitter, config: Array<any>)
@@ -16,11 +16,11 @@ export class BlockBlueprint implements Block
         this.config = config;
 
         for (let i = 0; i < config.length; i++) {
-            this.config[i].position.bind(new CallbackBinding(() => {
-                this.emitter.emit('change', {
+            this.config[i].position.getEmitter().on('afterUpdate', (event: any) => {
+                this.emitter.emit('resize', {
                     positions: this.getPositions()
                 });
-            }))
+            });
         }
     }
 
@@ -40,5 +40,10 @@ export class BlockBlueprint implements Block
             positions.push(this.config[i].position)
         }
         return positions;
+    }
+
+    getEmitter(): Emitter
+    {
+        return this.emitter;
     }
 }

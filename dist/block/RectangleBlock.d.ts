@@ -7,4 +7,5 @@ export declare class RecktangleBlock implements Block {
     constructor(emitter: Emitter, top: AbsolutePosition, right: AbsolutePosition, bottom: AbsolutePosition, left: AbsolutePosition);
     bind(element: HTMLElement): void;
     getPositions(): Array<AbsolutePosition>;
+    getEmitter(): Emitter;
 }

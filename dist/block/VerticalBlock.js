@@ -22,6 +22,9 @@ var VerticalBlock = (function () {
     VerticalBlock.prototype.getPositions = function () {
         return this.blueprint.getPositions();
     };
+    VerticalBlock.prototype.getEmitter = function () {
+        return this.blueprint.getEmitter();
+    };
     return VerticalBlock;
 }());
 exports.VerticalBlock = VerticalBlock;

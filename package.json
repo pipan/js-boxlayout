@@ -17,7 +17,7 @@
     "url": "git+https://github.com/pipan/js-boxlayout.git"
   },
   "dependencies": {
-    "@wildebeest/common": "^0.2.2",
+    "@wildebeest/common": "^0.2.3",
     "@wildebeest/component": "^0.1.0",
     "@wildebeest/drag": "^0.3.1",
     "@wildebeest/js-modules": "^0.1.2",

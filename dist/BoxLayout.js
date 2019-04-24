@@ -25,6 +25,7 @@ var InverseValue_1 = require("./position/InverseValue");
 var PositionValue_1 = require("./position/PositionValue");
 var BoxLayout = (function () {
     function BoxLayout(emitterService, viewportService, horizontalBuilder, verticalBuilder, domService) {
+        var _this = this;
         this.positions = {};
         this.blocks = {};
         this.config = {};
@@ -57,6 +58,20 @@ var BoxLayout = (function () {
             deviderRight: new VerticalBlock_1.VerticalBlock(this.emitterService.createEmitter(), this.positions.top, this.positions.bottom, new InverseValue_1.InverseValue(this.positions.right)),
             deviderBottom: new HorizontalBlock_1.HorizontalBlock(this.emitterService.createEmitter(), this.positions.left, this.positions.screenRight, new InverseValue_1.InverseValue(this.positions.bottom))
         };
+        var _loop_1 = function (key) {
+            this_1.positions[key].getEmitter().on('afterUpdate', function (event) {
+                _this.emitter.emit('resize', {
+                    position: _this.positions[key],
+                    value: event.vaue,
+                    min: event.min,
+                    max: event.max
+                });
+            });
+        };
+        var this_1 = this;
+        for (var key in this.positions) {
+            _loop_1(key);
+        }
     }
     BoxLayout.prototype.initialize = function (element, config) {
         var _this = this;
@@ -101,7 +116,6 @@ var BoxLayout = (function () {
         for (var key in this.positions) {
             this.positions[key].update();
         }
-        this.emitter.emit('wbRecalc', {});
     };
     BoxLayout.BLOCK_TOP = "top";
     BoxLayout.BLOCK_LEFT = "left";

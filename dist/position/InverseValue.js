@@ -29,6 +29,14 @@ var InverseValue = (function () {
         for (var i = 0; i < this.bindings.length; i++) {
             this.bindings[i].update(this.getValue());
         }
+        this.getEmitter().emit('afterUpdate', {
+            value: this.getValue(),
+            max: this.getMax(),
+            min: this.getMin()
+        });
+    };
+    InverseValue.prototype.getEmitter = function () {
+        return this.position.getEmitter();
     };
     return InverseValue;
 }());

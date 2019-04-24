@@ -1,5 +1,6 @@
 import { AbsolutePosition } from "./AbsolutePosition";
 import { Binding } from "../binding/Binding";
+import { Emitter } from "@wildebeest/common";
 export declare class InverseValue implements AbsolutePosition {
     protected position: AbsolutePosition;
     protected bindings: Array<Binding>;
@@ -13,4 +14,5 @@ export declare class InverseValue implements AbsolutePosition {
     setMin(min: number): void;
     setValue(value: number): void;
     update(): void;
+    getEmitter(): Emitter;
 }

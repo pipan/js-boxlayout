@@ -1,6 +1,7 @@
 import { AbsolutePosition } from "./AbsolutePosition";
 import { Binding } from "../binding/Binding";
 import { CallbackBinding } from "../binding/CallbackBinding";
+import { Emitter } from "@wildebeest/common";
 
 export class InverseValue implements AbsolutePosition
 {
@@ -48,5 +49,15 @@ export class InverseValue implements AbsolutePosition
         for (let i = 0; i < this.bindings.length; i++) {
             this.bindings[i].update(this.getValue());
         }
+        this.getEmitter().emit('afterUpdate', {
+            value: this.getValue(),
+            max: this.getMax(),
+            min: this.getMin()
+        });
+    }
+
+    getEmitter(): Emitter
+    {
+        return this.position.getEmitter();
     }
 }

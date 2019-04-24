@@ -1,4 +1,5 @@
 import 'ts-jest';
+import "reflect-metadata";
 import { PositionValue } from '../src/position/PositionValue';
 import { AbsolutePosition } from '../src/position/AbsolutePosition';
 import { Binding } from '../src/binding/Binding';

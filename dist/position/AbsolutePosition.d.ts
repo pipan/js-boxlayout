@@ -1,3 +1,4 @@
+import { Emitter } from "@wildebeest/common";
 import { Binding } from "../binding/Binding";
 export interface AbsolutePosition {
     bind(binding: Binding): void;
@@ -9,4 +10,5 @@ export interface AbsolutePosition {
     getMin(): number;
     getMax(): number;
     update(): void;
+    getEmitter(): Emitter;
 }

@@ -12,6 +12,7 @@ import { VerticalDeviderBuilder } from "./VerticalDeviderBuilder";
 import { InverseValue } from "./position/InverseValue";
 import { PositionValue } from "./position/PositionValue";
 import { Block } from "./block/Block";
+import { AbsolutePosition } from "./position/AbsolutePosition";
 
 @injectable()
 export class BoxLayout
@@ -22,7 +23,7 @@ export class BoxLayout
     public static BLOCK_RIGHT: string = "right";
     public static BLOCK_BOTTOM: string = "bottom";
 
-    protected positions: any = {};
+    protected positions: { [key: string]: AbsolutePosition } = {};
     protected blocks: any = {};
     protected emitterService: EmitterService;
     protected emitter: Emitter;
@@ -64,6 +65,17 @@ export class BoxLayout
             deviderRight: new VerticalBlock(this.emitterService.createEmitter(), this.positions.top, this.positions.bottom, new InverseValue(this.positions.right)),
             deviderBottom: new HorizontalBlock(this.emitterService.createEmitter(), this.positions.left, this.positions.screenRight, new InverseValue(this.positions.bottom))
         }
+
+        for (let key in this.positions) {
+            this.positions[key].getEmitter().on('afterUpdate', (event: any) => {
+                this.emitter.emit('resize', {
+                    position: this.positions[key],
+                    value: event.vaue,
+                    min: event.min,
+                    max: event.max
+                });
+            })
+        }
     }
 
     public initialize(element: HTMLElement, config: any): void
@@ -87,8 +99,6 @@ export class BoxLayout
                 this.positions.bottom.moveBy(-event.vertical);
             });
         }
-
-        // this.getEmitter().on('wbResize', this.onResize.bind(this));
     }
 
     public getPositions(): any
@@ -125,6 +135,5 @@ export class BoxLayout
         for (let key in this.positions) {
             this.positions[key].update();
         }
-        this.emitter.emit('wbRecalc', {});
     }
 }

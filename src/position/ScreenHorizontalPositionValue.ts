@@ -1,4 +1,4 @@
-import { ViewportService } from "@wildebeest/common";
+import { ViewportService, Emitter } from "@wildebeest/common";
 import { AbsolutePosition } from "./AbsolutePosition";
 import { Binding } from "../binding/Binding";
 
@@ -60,5 +60,10 @@ export class ScreenHorizontalPositionValue implements AbsolutePosition
     update(): void
     {
         this.position.update();
+    }
+
+    getEmitter(): Emitter
+    {
+        return this.position.getEmitter();
     }
 }

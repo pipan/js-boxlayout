@@ -38,6 +38,9 @@ var ScreenVerticalPositionValue = (function () {
     ScreenVerticalPositionValue.prototype.update = function () {
         this.position.update();
     };
+    ScreenVerticalPositionValue.prototype.getEmitter = function () {
+        return this.position.getEmitter();
+    };
     return ScreenVerticalPositionValue;
 }());
 exports.ScreenVerticalPositionValue = ScreenVerticalPositionValue;

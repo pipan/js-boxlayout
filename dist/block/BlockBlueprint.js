@@ -19,6 +19,7 @@ var BlockBlueprint = (function () {
         for (var i = 0; i < this.config.length; i++) {
             var binding = new PixelsBinding_1.PixelsBinding(element, this.config[i].elementProperty);
             this.config[i].position.bind(binding);
+            binding.update(this.config[i].position.getValue());
         }
     };
     BlockBlueprint.prototype.getPositions = function () {

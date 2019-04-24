@@ -38,6 +38,9 @@ var ScreenHorizontalPositionValue = (function () {
     ScreenHorizontalPositionValue.prototype.update = function () {
         this.position.update();
     };
+    ScreenHorizontalPositionValue.prototype.getEmitter = function () {
+        return this.position.getEmitter();
+    };
     return ScreenHorizontalPositionValue;
 }());
 exports.ScreenHorizontalPositionValue = ScreenHorizontalPositionValue;

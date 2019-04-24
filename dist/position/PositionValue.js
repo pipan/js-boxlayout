@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var common_1 = require("@wildebeest/common");
 var PositionValue = (function () {
     function PositionValue(value, min, max) {
         this.bindings = [];
@@ -7,6 +8,7 @@ var PositionValue = (function () {
         this.value = value;
         this.min = min;
         this.max = max;
+        this.emitter = new common_1.Emitter();
     }
     PositionValue.prototype.bind = function (binding) {
         this.bindings.push(binding);
@@ -29,6 +31,11 @@ var PositionValue = (function () {
         for (var i = 0; i < this.bindings.length; i++) {
             this.bindings[i].update(this.value);
         }
+        this.getEmitter().emit('afterUpdate', {
+            value: this.getValue(),
+            min: this.getMin(),
+            max: this.getMax()
+        });
     };
     PositionValue.prototype.getMax = function () {
         return this.max;
@@ -43,6 +50,9 @@ var PositionValue = (function () {
     PositionValue.prototype.setMin = function (min) {
         this.min = min;
         this.setValue(this.getValue());
+    };
+    PositionValue.prototype.getEmitter = function () {
+        return this.emitter;
     };
     return PositionValue;
 }());

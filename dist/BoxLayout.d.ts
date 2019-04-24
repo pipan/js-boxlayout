@@ -4,13 +4,16 @@ import { BlockBlueprint } from "./block/BlockBlueprint";
 import { ComponentBuilder, Component } from "@wildebeest/component";
 import { VerticalDeviderBuilder } from "./VerticalDeviderBuilder";
 import { Block } from "./block/Block";
+import { AbsolutePosition } from "./position/AbsolutePosition";
 export declare class BoxLayout {
     static BLOCK_TOP: string;
     static BLOCK_LEFT: string;
     static BLOCK_CENTER: string;
     static BLOCK_RIGHT: string;
     static BLOCK_BOTTOM: string;
-    protected positions: any;
+    protected positions: {
+        [key: string]: AbsolutePosition;
+    };
     protected blocks: any;
     protected emitterService: EmitterService;
     protected emitter: Emitter;

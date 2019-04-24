@@ -1,3 +1,4 @@
+import { Emitter } from "@wildebeest/common";
 import { Binding } from "../binding/Binding";
 import { AbsolutePosition } from './AbsolutePosition';
 
@@ -7,12 +8,14 @@ export class PositionValue implements AbsolutePosition
     protected value: number = 0;
     protected min: number;
     protected max: number;
+    protected emitter: Emitter;
 
     constructor(value: number, min: number, max: number)
     {
         this.value = value;
         this.min = min;
         this.max = max;
+        this.emitter = new Emitter();
     }
 
     public bind(binding: Binding): void
@@ -45,6 +48,11 @@ export class PositionValue implements AbsolutePosition
         for (let i = 0; i < this.bindings.length; i++) {
             this.bindings[i].update(this.value);
         }
+        this.getEmitter().emit('afterUpdate', {
+            value: this.getValue(),
+            min: this.getMin(),
+            max: this.getMax()
+        });
     }
 
     public getMax(): number
@@ -67,5 +75,10 @@ export class PositionValue implements AbsolutePosition
     {
         this.min = min;
         this.setValue(this.getValue());
+    }
+
+    public getEmitter(): Emitter
+    {
+        return this.emitter;
     }
 }

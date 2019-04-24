@@ -1,4 +1,4 @@
-import { ViewportService } from "@wildebeest/common";
+import { ViewportService, Emitter } from "@wildebeest/common";
 import { AbsolutePosition } from "./AbsolutePosition";
 import { Binding } from "../binding/Binding";
 export declare class ScreenVerticalPositionValue implements AbsolutePosition {
@@ -13,4 +13,5 @@ export declare class ScreenVerticalPositionValue implements AbsolutePosition {
     setMin(min: number): void;
     setValue(value: number): void;
     update(): void;
+    getEmitter(): Emitter;
 }

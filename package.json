@@ -17,17 +17,17 @@
     "url": "git+https://github.com/pipan/js-boxlayout.git"
   },
   "dependencies": {
-    "@wildebeest/common": "^0.2.0",
-    "@wildebeest/drag": "^0.3.0",
-    "@wildebeest/js-modules": "^0.1.0",
-    "@wildebeest/scroll": "^0.3.0",
-    "@wildebeest/component": "^0.1.0"
+    "@wildebeest/common": "^0.2.2",
+    "@wildebeest/component": "^0.1.0",
+    "@wildebeest/drag": "^0.3.1",
+    "@wildebeest/js-modules": "^0.1.2",
+    "@wildebeest/scroll": "^0.3.5"
   },
   "devDependencies": {
     "@types/jest": "^24.0.11",
     "jest": "^24.7.1",
     "ts-jest": "^24.0.2",
-    "typescript": "^3.4.3"
+    "typescript": "^3.4.5"
   },
   "keywords": [
     "js",

@@ -54,11 +54,6 @@ export class BoxLayout
             left: new ScreenHorizontalPositionValue(new PositionValue(0 , 0, viewportService.getWidth()), viewportService)
         };
 
-        this.positions.topInverse = new InverseValue(this.positions.top);
-        this.positions.rightInverse = new InverseValue(this.positions.right);
-        this.positions.bototmInverse = new InverseValue(this.positions.bottom);
-        this.positions.leftInverse = new InverseValue(this.positions.left);
-
         this.blueprints = {
             top: new RecktangleBlock(this.positions.screenTop, this.positions.screenRight, new InverseValue(this.positions.top), this.positions.screenLeft),
             left: new RecktangleBlock(this.positions.top, new InverseValue(this.positions.left), this.positions.screenBottom, this.positions.screenLeft),
@@ -104,7 +99,7 @@ export class BoxLayout
     protected createDragableDevider(blueprint: BlockBlueprint, builder: ComponentBuilder): Component
     {
         let deviderElement: Component = builder.build({});
-        this.domService.insert(deviderElement.getElement(), this.element);
+        this.domService.insert([deviderElement.getElement()], this.element);
         blueprint.bind(deviderElement.getElement());
         return deviderElement;
     }
@@ -118,11 +113,6 @@ export class BoxLayout
     {
         return this.blueprints[blockName];
     }
-
-    // public onResize(event: any): void
-    // {
-        
-    // }
 
     public getEmitter(): Emitter
     {

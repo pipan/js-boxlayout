@@ -47,10 +47,6 @@ var BoxLayout = (function () {
             bottom: new SceenVerticalPositionValue_1.ScreenVerticalPositionValue(new PositionValue_1.PositionValue(0, 0, viewportService.getHeight()), viewportService),
             left: new ScreenHorizontalPositionValue_1.ScreenHorizontalPositionValue(new PositionValue_1.PositionValue(0, 0, viewportService.getWidth()), viewportService)
         };
-        this.positions.topInverse = new InverseValue_1.InverseValue(this.positions.top);
-        this.positions.rightInverse = new InverseValue_1.InverseValue(this.positions.right);
-        this.positions.bototmInverse = new InverseValue_1.InverseValue(this.positions.bottom);
-        this.positions.leftInverse = new InverseValue_1.InverseValue(this.positions.left);
         this.blueprints = {
             top: new RectangleBlock_1.RecktangleBlock(this.positions.screenTop, this.positions.screenRight, new InverseValue_1.InverseValue(this.positions.top), this.positions.screenLeft),
             left: new RectangleBlock_1.RecktangleBlock(this.positions.top, new InverseValue_1.InverseValue(this.positions.left), this.positions.screenBottom, this.positions.screenLeft),
@@ -87,7 +83,7 @@ var BoxLayout = (function () {
     };
     BoxLayout.prototype.createDragableDevider = function (blueprint, builder) {
         var deviderElement = builder.build({});
-        this.domService.insert(deviderElement.getElement(), this.element);
+        this.domService.insert([deviderElement.getElement()], this.element);
         blueprint.bind(deviderElement.getElement());
         return deviderElement;
     };

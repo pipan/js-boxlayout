@@ -29,15 +29,25 @@ export class InverseValue implements AbsolutePosition
         return this.position.getMin();
     }
 
-    moveBy(value: number): void { }
+    moveBy(value: number): void
+    {
+        this.position.moveBy(value);
+    }
 
     getValue(): number
     {
         return this.getMax() - this.position.getValue();
     }
 
-    setMax(max: number): void { }
-    setMin(min: number): void { }
+    setMax(max: number): void 
+    {
+        this.position.setMax(max);
+    }
+
+    setMin(min: number): void
+    {
+        this.position.setMin(min);
+    }
 
     setValue(value: number): void
     {

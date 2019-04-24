@@ -16,12 +16,18 @@ var InverseValue = (function () {
     InverseValue.prototype.getMin = function () {
         return this.position.getMin();
     };
-    InverseValue.prototype.moveBy = function (value) { };
+    InverseValue.prototype.moveBy = function (value) {
+        this.position.moveBy(value);
+    };
     InverseValue.prototype.getValue = function () {
         return this.getMax() - this.position.getValue();
     };
-    InverseValue.prototype.setMax = function (max) { };
-    InverseValue.prototype.setMin = function (min) { };
+    InverseValue.prototype.setMax = function (max) {
+        this.position.setMax(max);
+    };
+    InverseValue.prototype.setMin = function (min) {
+        this.position.setMin(min);
+    };
     InverseValue.prototype.setValue = function (value) {
         this.update();
     };

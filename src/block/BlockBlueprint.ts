@@ -29,7 +29,7 @@ export class BlockBlueprint implements Block
         for (let i = 0; i < this.config.length; i++) {
             let binding: Binding = new PixelsBinding(element, this.config[i].elementProperty);
             this.config[i].position.bind(binding);
-            binding.update(this.config[i].position.getValue());
+            this.config[i].position.update();
         }
     }
 

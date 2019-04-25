@@ -1,4 +1,4 @@
-import { injectable, inject } from "inversify";
+import { injectable, inject, named } from "inversify";
 import { EmitterService, Emitter, ViewportService, DomService } from "@wildebeest/common";
 import { HorizontalDeviderBuilder } from "./HorizontalDeviderBuilder";
 import { ScreenVerticalPositionValue } from "./position/SceenVerticalPositionValue";
@@ -6,7 +6,6 @@ import { ScreenHorizontalPositionValue } from "./position/ScreenHorizontalPositi
 import { RecktangleBlock } from "./block/RectangleBlock";
 import { VerticalBlock } from "./block/VerticalBlock";
 import { HorizontalBlock } from "./block/HorizontalBlock";
-import { BlockBlueprint } from "./block/BlockBlueprint";
 import { ComponentBuilder, Component } from "@wildebeest/component";
 import { VerticalDeviderBuilder } from "./VerticalDeviderBuilder";
 import { InverseValue } from "./position/InverseValue";
@@ -23,6 +22,11 @@ export class BoxLayout
     public static BLOCK_RIGHT: string = "right";
     public static BLOCK_BOTTOM: string = "bottom";
 
+    public static POSITION_TOP: string = "top";
+    public static POSITION_RIGHT: string = "right";
+    public static POSITION_BOTTOM: string = "bottom";
+    public static POSITION_LEFT: string = "left";
+
     protected positions: { [key: string]: AbsolutePosition } = {};
     protected blocks: { [key: string]: Block } = {};
     protected emitterService: EmitterService;
@@ -33,7 +37,7 @@ export class BoxLayout
     protected builers: any = {};
     protected element: HTMLElement;
 
-    constructor(@inject(EmitterService) emitterService: EmitterService, @inject(ViewportService) viewportService: ViewportService, @inject(HorizontalDeviderBuilder) horizontalBuilder: HorizontalDeviderBuilder, @inject(VerticalDeviderBuilder) verticalBuilder: VerticalDeviderBuilder, @inject(DomService) domService: DomService)
+    constructor(@inject(EmitterService) emitterService: EmitterService, @inject(ViewportService) viewportService: ViewportService, @inject('ComponentBuilder') @named('horizontal-devider') horizontalBuilder: HorizontalDeviderBuilder, @inject('ComponentBuilder') @named('vertical-devider') verticalBuilder: VerticalDeviderBuilder, @inject(DomService) domService: DomService)
     {
         this.emitterService = emitterService;
         this.emitter = this.emitterService.createEmitter();
@@ -127,6 +131,11 @@ export class BoxLayout
     {
         this.blocks[blockName].bind(element);
         return this.getBlock(blockName);
+    }
+
+    public getPosition(positionName: string): AbsolutePosition
+    {
+        return this.positions[positionName];
     }
 
     public getBlock(blockName: string): Block

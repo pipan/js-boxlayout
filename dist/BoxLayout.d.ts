@@ -10,6 +10,10 @@ export declare class BoxLayout {
     static BLOCK_CENTER: string;
     static BLOCK_RIGHT: string;
     static BLOCK_BOTTOM: string;
+    static POSITION_TOP: string;
+    static POSITION_RIGHT: string;
+    static POSITION_BOTTOM: string;
+    static POSITION_LEFT: string;
     protected positions: {
         [key: string]: AbsolutePosition;
     };
@@ -28,6 +32,7 @@ export declare class BoxLayout {
     getPositions(): any;
     protected createDragableDevider(block: Block, builder: ComponentBuilder): Component;
     bindElement(element: any, blockName: string): Block;
+    getPosition(positionName: string): AbsolutePosition;
     getBlock(blockName: string): Block;
     getEmitter(): Emitter;
     recalc(): void;

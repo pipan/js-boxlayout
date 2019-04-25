@@ -119,6 +119,9 @@ var BoxLayout = (function () {
         this.blocks[blockName].bind(element);
         return this.getBlock(blockName);
     };
+    BoxLayout.prototype.getPosition = function (positionName) {
+        return this.positions[positionName];
+    };
     BoxLayout.prototype.getBlock = function (blockName) {
         return this.blocks[blockName];
     };
@@ -135,9 +138,13 @@ var BoxLayout = (function () {
     BoxLayout.BLOCK_CENTER = "center";
     BoxLayout.BLOCK_RIGHT = "right";
     BoxLayout.BLOCK_BOTTOM = "bottom";
+    BoxLayout.POSITION_TOP = "top";
+    BoxLayout.POSITION_RIGHT = "right";
+    BoxLayout.POSITION_BOTTOM = "bottom";
+    BoxLayout.POSITION_LEFT = "left";
     BoxLayout = __decorate([
         inversify_1.injectable(),
-        __param(0, inversify_1.inject(common_1.EmitterService)), __param(1, inversify_1.inject(common_1.ViewportService)), __param(2, inversify_1.inject(HorizontalDeviderBuilder_1.HorizontalDeviderBuilder)), __param(3, inversify_1.inject(VerticalDeviderBuilder_1.VerticalDeviderBuilder)), __param(4, inversify_1.inject(common_1.DomService)),
+        __param(0, inversify_1.inject(common_1.EmitterService)), __param(1, inversify_1.inject(common_1.ViewportService)), __param(2, inversify_1.inject('ComponentBuilder')), __param(2, inversify_1.named('horizontal-devider')), __param(3, inversify_1.inject('ComponentBuilder')), __param(3, inversify_1.named('vertical-devider')), __param(4, inversify_1.inject(common_1.DomService)),
         __metadata("design:paramtypes", [common_1.EmitterService, common_1.ViewportService, HorizontalDeviderBuilder_1.HorizontalDeviderBuilder, VerticalDeviderBuilder_1.VerticalDeviderBuilder, common_1.DomService])
     ], BoxLayout);
     return BoxLayout;

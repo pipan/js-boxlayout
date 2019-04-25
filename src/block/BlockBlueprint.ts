@@ -3,7 +3,6 @@ import { Block } from "./Block";
 import { PixelsBinding } from "../binding/PixelsBinding";
 import { AbsolutePosition } from "../position/AbsolutePosition";
 import { Emitter } from "@wildebeest/common";
-import { CallbackBinding } from "../binding/CallbackBinding";
 
 export class BlockBlueprint implements Block
 {

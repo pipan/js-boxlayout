@@ -89,8 +89,6 @@ var BoxLayout = (function () {
     BoxLayout.prototype.initialize = function (element, config) {
         var _this = this;
         this.element = element;
-        this.element.style.position = "absolute";
-        this.element.style.overflow = "hidden";
         this.config = config;
         this.positions.top.setValue(this.config.top || 0);
         this.positions.right.setValue(this.config.right || 0);
@@ -119,6 +117,8 @@ var BoxLayout = (function () {
     };
     BoxLayout.prototype.bindElement = function (element, blockName) {
         this.blocks[blockName].bind(element);
+        element.style.position = "absolute";
+        element.style.overflow = "hidden";
         return this.getBlock(blockName);
     };
     BoxLayout.prototype.getPosition = function (positionName) {

@@ -94,8 +94,6 @@ export class BoxLayout
     public initialize(element: HTMLElement, config: any): void
     {
         this.element = element;
-        this.element.style.position = "absolute";
-        this.element.style.overflow = "hidden";
         this.config = config;
 
         this.positions.top.setValue(this.config.top || 0);
@@ -132,6 +130,8 @@ export class BoxLayout
     public bindElement(element: any, blockName: string): Block
     {
         this.blocks[blockName].bind(element);
+        element.style.position = "absolute";
+        element.style.overflow = "hidden";
         return this.getBlock(blockName);
     }
 

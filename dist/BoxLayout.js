@@ -130,6 +130,9 @@ var BoxLayout = (function () {
     BoxLayout.prototype.getEmitter = function () {
         return this.emitter;
     };
+    BoxLayout.prototype.getElement = function () {
+        return this.element;
+    };
     BoxLayout.prototype.recalc = function () {
         for (var key in this.positions) {
             this.positions[key].update();

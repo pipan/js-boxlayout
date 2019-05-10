@@ -14,6 +14,7 @@ var BoxLayoutModule = (function () {
     };
     BoxLayoutModule.prototype.register = function (container) {
         container.bind(BoxLayout_1.BoxLayout).toSelf();
+        container.bind("Factory<BoxLayout>").toAutoFactory(BoxLayout_1.BoxLayout);
         container.bind('ComponentBuilder').to(VerticalDeviderBuilder_1.VerticalDeviderBuilder).inSingletonScope().whenTargetNamed('vertical-devider');
         container.bind('ComponentBuilder').to(HorizontalDeviderBuilder_1.HorizontalDeviderBuilder).inSingletonScope().whenTargetNamed('horizontal-devider');
     };

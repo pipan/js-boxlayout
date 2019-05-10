@@ -4,7 +4,7 @@ import { ComponentBuilder, Component } from "@wildebeest/component";
 import { VerticalDeviderBuilder } from "./VerticalDeviderBuilder";
 import { Block } from "./block/Block";
 import { AbsolutePosition } from "./position/AbsolutePosition";
-export declare class BoxLayout {
+export declare class BoxLayout implements Component {
     static BLOCK_TOP: string;
     static BLOCK_LEFT: string;
     static BLOCK_CENTER: string;
@@ -35,5 +35,6 @@ export declare class BoxLayout {
     getPosition(positionName: string): AbsolutePosition;
     getBlock(blockName: string): Block;
     getEmitter(): Emitter;
+    getElement(): HTMLElement;
     recalc(): void;
 }

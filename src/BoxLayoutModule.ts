@@ -1,7 +1,7 @@
 import { Module } from "@wildebeest/js-modules";
 import { CommonModule } from "@wildebeest/common";
 import { DragModule } from "@wildebeest/drag";
-import { Container } from "inversify";
+import { Container, interfaces } from "inversify";
 import { BoxLayout } from "./BoxLayout";
 import { HorizontalDeviderBuilder } from "./HorizontalDeviderBuilder";
 import { ComponentModule, ComponentBuilder } from "@wildebeest/component";
@@ -17,6 +17,7 @@ export class BoxLayoutModule implements Module
     register(container: Container): void
     {
         container.bind<BoxLayout>(BoxLayout).toSelf();
+        container.bind<interfaces.Factory<BoxLayout>>("Factory<BoxLayout>").toAutoFactory(BoxLayout);
         container.bind<ComponentBuilder>('ComponentBuilder').to(VerticalDeviderBuilder).inSingletonScope().whenTargetNamed('vertical-devider');
         container.bind<ComponentBuilder>('ComponentBuilder').to(HorizontalDeviderBuilder).inSingletonScope().whenTargetNamed('horizontal-devider');
     }

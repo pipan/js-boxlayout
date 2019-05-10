@@ -14,7 +14,7 @@ import { Block } from "./block/Block";
 import { AbsolutePosition } from "./position/AbsolutePosition";
 
 @injectable()
-export class BoxLayout
+export class BoxLayout implements Component
 {
     public static BLOCK_TOP: string = "top";
     public static BLOCK_LEFT: string = "left";
@@ -148,6 +148,11 @@ export class BoxLayout
     public getEmitter(): Emitter
     {
         return this.emitter;
+    }
+
+    public getElement(): HTMLElement
+    {
+        return this.element;
     }
 
     public recalc(): void
